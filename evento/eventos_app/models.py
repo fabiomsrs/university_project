@@ -3,8 +3,7 @@ from django.db import models
 class Usuario(models.Model):
 	nomeUsuario = models.CharField(max_length=25)
 	login = models.CharField(max_length=25)
-	password = models.CharField(max_length=25)
-	eventosCriados = models.ForeignKey('Evento', default='')
+	password = models.CharField(max_length=25)	
 
 class Atividade(models.Model):
 	nomeAtividade = models.CharField(max_length=25)	
@@ -30,6 +29,7 @@ class Cupom(models.Model):
 class Evento(models.Model):
 	nomeEvento = models.CharField(max_length=25)
 	instituicao = models.ManyToManyField('Instituicao', through='Relacionamento')
+	usuarioCriador = models.ForeignKey('Usuario', default='')
 
 class Instituicao(models.Model):
 	nomeInstituicao = models.CharField(max_length=25)

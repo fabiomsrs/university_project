@@ -1,9 +1,9 @@
-from django.conf.urls import url,include
+from django.conf.urls import url
 from django.contrib import admin
 
 from . import views
 
 urlpatterns = [
-	url(r'',views.index, name='login'),
-	url(r'^/cadastroUsuario$',views.index, name='cadastroUsuario'),
+	url(r'^$',views.index, name='login'),
+	url(r'^cadastroUsuario/$',views.cadastroUsuario, name='cadastroUsuario'),
 ]
