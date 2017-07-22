@@ -3,7 +3,8 @@ from django.db import models
 class Usuario(models.Model):
 	nomeUsuario = models.CharField(max_length=25)
 	login = models.CharField(max_length=25)
-	password = models.CharField(max_length=25)		
+	password = models.CharField(max_length=25)
+	eventosCriados = models.ForeignKey('Evento', default='')
 
 class Atividade(models.Model):
 	nomeAtividade = models.CharField(max_length=25)	
