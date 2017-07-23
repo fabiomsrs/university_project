@@ -8,7 +8,7 @@ class Usuario(models.Model):
 class Atividade(models.Model):
 	nomeAtividade = models.CharField(max_length=25)	
 	descricao = models.CharField(max_length=25)
-	valorAtividade = models.FloatField()	
+	valorAtividade = models.FloatField(null=True)	
 	evento = models.ForeignKey('Evento')
 
 class Inscricao(models.Model):	
@@ -42,7 +42,7 @@ class RelacionamentoAtividadeInscricao(models.Model):
 	inscricao = models.ForeignKey('Inscricao')
 	
 class Pagamento(models.Model):	
-	valorTotal = models.FloatField(default=0)
+	valorTotal = models.FloatField(null=True)
 	pago = models.BooleanField(default=False)	
 	inscricao = models.ForeignKey('Inscricao')
 	def getValorTotal(self):
