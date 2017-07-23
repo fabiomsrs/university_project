@@ -8,18 +8,14 @@ class Usuario(models.Model):
 class Atividade(models.Model):
 	nomeAtividade = models.CharField(max_length=25)	
 	descricao = models.CharField(max_length=25)
-	valorAtividade = models.FloatField()
-	inscricao = models.ForeignKey('Inscricao')
+	valorAtividade = models.FloatField()	
 	evento = models.ForeignKey('Evento')
 
 class Inscricao(models.Model):	
-	usuario = models.ForeignKey('Usuario')
-	pagamento = models.ForeignKey('Pagamento')
+	usuario = models.ForeignKey('Usuario')	
 	evento = models.ForeignKey('Evento')
-
-class Pagamento(models.Model):
-	valorTotal = models.FloatField()
-	estadoPagamento = models.BooleanField(default=False)
+	atividade = models.ManyToManyField('Atividade', through='RelacionamentoAtividadeInscricao')
+		
 	
 class Cupom(models.Model):
 	desconto = models.IntegerField()
@@ -29,7 +25,7 @@ class Cupom(models.Model):
 class Evento(models.Model):
 	nomeEvento = models.CharField(max_length=25)
 	instituicao = models.ManyToManyField('Instituicao', through='Relacionamento')
-	usuarioCriador = models.ForeignKey('Usuario', default='')
+	usuarioCriador = models.ForeignKey('Usuario')
 
 class Instituicao(models.Model):
 	nomeInstituicao = models.CharField(max_length=25)
@@ -41,7 +37,18 @@ class Relacionamento(models.Model):
 	instituicao = models.ForeignKey('Instituicao')
 	descricaoRelacionamento = models.CharField(max_length=25)
 
-
-
-
+class RelacionamentoAtividadeInscricao(models.Model):
+	atividade = models.ForeignKey('Atividade')
+	inscricao = models.ForeignKey('Inscricao')
 	
+class Pagamento(models.Model):	
+	valorTotal = models.FloatField(default=0)
+	pago = models.BooleanField(default=False)	
+	inscricao = models.ForeignKey('Inscricao')
+	def getValorTotal(self):
+		relacionamentos = RelacionamentoAtividadeInscricao.objects.filter(inscricao = self.inscricao)
+		valorTotal = 0
+		for i in relacionamentos:
+			valorTotal += i.atividade.valorAtividade
+
+		return valorTotal
