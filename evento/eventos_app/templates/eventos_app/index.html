@@ -1,0 +1,21 @@
+{% extends './base.html'%}
+
+{%block content%}
+		<section class="login-form">
+	        <form method="post" action="#" role="login">	        
+		        <input type="email" name="email" placeholder="Email" required class="form-control input-lg" value=""/>
+	          
+	            <input type="password" class="form-control input-lg" id="password" placeholder="Password" required="" />
+	          
+	          
+	            <div class="pwstrength_viewport_progress"></div>
+	          
+	          
+	            <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
+          
+	            <div>
+	              <a href="{% url 'cadastroUsuario'%}">Create account</a> or <a href="#">reset password</a>
+	            </div>
+	        </form>
+        </section>
+{%endblock%}
