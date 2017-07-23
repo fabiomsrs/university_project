@@ -42,7 +42,7 @@ class RelacionamentoAtividadeInscricao(models.Model):
 	inscricao = models.ForeignKey('Inscricao')
 	
 class Pagamento(models.Model):	
-	valorTotal = models.FloatField(default=0)
+	valorTotal = models.FloatField(null=True)
 	pago = models.BooleanField(default=False)	
 	inscricao = models.ForeignKey('Inscricao')
 	def getValorTotal(self):
