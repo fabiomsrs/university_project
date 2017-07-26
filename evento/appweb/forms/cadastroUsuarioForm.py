@@ -1,7 +1,7 @@
 from django import forms
-from usuario.models import Usuario
+from django.contrib.auth.models import User
 
 class UsuarioForm(forms.ModelForm):
 	class Meta:
-		model = Usuario
-		fields = ('nome_usuario','login','password')
+		model = User		
+		fields = ('first_name','username','password')

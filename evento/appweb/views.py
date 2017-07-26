@@ -2,7 +2,6 @@ from django.shortcuts import render,redirect
 #
 #
 from .forms.cadastroUsuarioForm import UsuarioForm
-from usuario.models import Usuario
 # Create your views here.
 def index(request):
 	return render(request, "appweb/index.html",{})
