@@ -2,40 +2,17 @@ from django.db import models
 
 
 class Atividade(models.Model):
-	nomeAtividade = models.CharField(max_length=25)	
+	nome_atividade = models.CharField(max_length=25)	
 	descricao = models.CharField(max_length=25)
-	valorAtividade = models.FloatField(null=True)	
-	evento = models.ForeignKey('Evento')
+	valor_atividade = models.FloatField(null=True)	
+	evento = models.ForeignKey('Evento',related_name='minhas_atividades')
 		
-	
+class Evento(models.Model):
+	nome_evento = models.CharField(max_length=25)
+	instituicao = models.ManyToManyField('instituicao.Instituicao')
+	usuario_criador = models.ForeignKey('usuario.Usuario',related_name='meus_eventos',default='')
+
 class Cupom(models.Model):
 	desconto = models.IntegerField()
-	evento = models.ForeignKey('Evento')
-	inscricao = models.ForeignKey('usuario.Inscricao',null=True)
+	evento = models.ForeignKey('Evento',related_name='meus_cupons',default='')	
 	
-class Evento(models.Model):
-	nomeEvento = models.CharField(max_length=25)
-	instituicao = models.ManyToManyField('Instituicao', through='Relacionamento')
-	usuarioCriador = models.ForeignKey('usuario.Usuario',default='')
-
-class Instituicao(models.Model):
-	nomeInstituicao = models.CharField(max_length=25)
-	uf = models.CharField(max_length=2)
-	#TODO listas de tags
-
-class Relacionamento(models.Model):
-	evento = models.ForeignKey('Evento')
-	instituicao = models.ForeignKey('Instituicao')
-	descricaoRelacionamento = models.CharField(max_length=25)
-	
-class Pagamento(models.Model):	
-	valorTotal = models.FloatField(null=True)
-	pago = models.BooleanField(default=False)	
-	inscricao = models.ForeignKey('usuario.Inscricao',default='')
-	def getValorTotal(self):
-		relacionamentos = RelacionamentoAtividadeInscricao.objects.filter(inscricao = self.inscricao)
-		valorTotal = 0
-		for i in relacionamentos:
-			valorTotal += i.atividade.valorAtividade
-
-		return valorTotal

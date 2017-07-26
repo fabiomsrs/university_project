@@ -4,4 +4,4 @@ from usuario.models import Usuario
 class UsuarioForm(forms.ModelForm):
 	class Meta:
 		model = Usuario
-		fields = ('nomeUsuario','login','password')
+		fields = ('nome_usuario','login','password')
