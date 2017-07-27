@@ -4,13 +4,14 @@ from inscricao.models import RelacionamentoAtividadeInscricao
 # Create your models here.
 
 class Pagamento(models.Model):	
-	valorTotal = models.FloatField(null=True)
+	valor_total = models.FloatField(null=True)
 	pago = models.BooleanField(default=False)	
 	inscricao = models.OneToOneField('inscricao.Inscricao',related_name='meu_pagamento',default='')
-	def getValorTotal(self):
-		relacionamentos = RelacionamentoAtividadeInscricao.objects.filter(inscricao = self.inscricao)
-		valorTotal = 0
-		for i in relacionamentos:
-			valorTotal += i.atividade.valorAtividade
 
-		return valorTotal
+	#setValorTotal atribui ao valor total, o valor de todas atividades que inscricao possui
+	def setValorTotal(self):
+		relacionamentos = RelacionamentoAtividadeInscricao.objects.filter(inscricao = self.inscricao)
+		self.valor_total = 0
+		for i in relacionamentos:
+			self.valor_total += i.atividade.valor_atividade
+		self.save()	
