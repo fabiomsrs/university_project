@@ -28,10 +28,9 @@ class Evento(models.Model):
 	usuario_criador = models.ForeignKey('auth.User',related_name='meus_eventos',default='')	
 	status = EnumField(TipoEvento,max_length=25,default=TipoEvento.NOVO)
 
-	def inscricoes_pagas(self):
+	def get_inscricoes_pagas(self):
 		inscricoes = self.minhas_inscricoes.get_queryset()
 		return inscricoes.filter(meu_pagamento__pago=True)
-
 
 class Cupom(models.Model):
 	desconto = models.IntegerField()

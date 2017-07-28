@@ -9,7 +9,7 @@ class Pagamento(models.Model):
 	inscricao = models.OneToOneField('inscricao.Inscricao',related_name='meu_pagamento',default='')
 
 	#setValorTotal atribui ao valor total, o valor de todas atividades que inscricao possui
-	def setValorTotal(self):
+	def set_valor_total(self):
 		relacionamentos = RelacionamentoAtividadeInscricao.objects.filter(inscricao = self.inscricao)
 		self.valor_total = 0
 		for i in relacionamentos:
