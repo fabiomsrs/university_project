@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
@@ -7,20 +8,21 @@ from django.contrib.auth.models import User
 from .forms.cadastroUsuarioForm import UsuarioForm
 
 # Create your views here.
-def index(request):
-	if request.method == "POST":
+def index(request):	
+	if request.method == "POST":#TODO
+		form = AuthenticationForm(data=request.POST)
 		username = request.POST['username']
 		password = request.POST['password']
-		user = authenticate(request, username=username, password=password)
+		user = authenticate(username=username, password=password)
 		if user is not None:
 			login(request, user)
-			return redirect('appweb/home.html',user)
+			return redirect('appweb/home.html')
 		else:
-			return render(request, "appweb/index.html")
+			return HttpResponse("<h1>LOGIN ERROR</h1>")
 
-	else:
+	else:		
 		form = AuthenticationForm()
-		return render(request, "appweb/index.html",{'form':form})
+		return render(request, "appweb/index.html", {'form':form})
 
 def cadastroUsuario(request):
 	if request.method == "POST":
