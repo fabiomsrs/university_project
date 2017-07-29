@@ -5,5 +5,4 @@ from django.db import models
 class Instituicao(models.Model):
 	nome_instituicao = models.CharField(max_length=25)
 	uf = models.CharField(max_length=2)
-	#TODO listas de tags
 
