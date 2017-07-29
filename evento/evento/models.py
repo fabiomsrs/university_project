@@ -20,11 +20,10 @@ class Atividade(models.Model):
 	descricao = models.CharField(max_length=25)
 	valor_atividade = models.FloatField(null=True)	
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
-	tipoAtividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)	
+	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)	
 	
 class Evento(models.Model):
-	nome_evento = models.CharField(max_length=25)
-	instituicao = models.ManyToManyField('instituicao.Instituicao')
+	nome_evento = models.CharField(max_length=25)	
 	usuario_criador = models.ForeignKey('auth.User',related_name='meus_eventos',default='')	
 	status = EnumField(TipoEvento,max_length=25,default=TipoEvento.NOVO)
 
