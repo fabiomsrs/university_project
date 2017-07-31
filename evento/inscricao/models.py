@@ -6,9 +6,6 @@ class Inscricao(models.Model):
 	evento = models.ForeignKey('evento.Evento', on_delete=models.CASCADE, related_name='minhas_inscricoes')
 	atividade = models.ManyToManyField('evento.Atividade', through='RelacionamentoAtividadeInscricao')
 
-	def getNomeUsuario(self):
-		return self.usuario.first_name
-
 	def __str__(self):
 		return self.usuario.first_name
 
