@@ -10,19 +10,22 @@ from .forms.cadastroUsuarioForm import UsuarioForm
 # Create your views here.
 def index(request):	
 	if request.method == "POST":#TODO
-		form = AuthenticationForm(data=request.POST)
 		username = request.POST['username']
 		password = request.POST['password']
 		user = authenticate(username=username, password=password)
+
 		if user is not None:
 			login(request, user)
-			return redirect('appweb/home.html')
+			return redirect('home')
 		else:
 			return HttpResponse("<h1>LOGIN ERROR</h1>")
 
 	else:		
 		form = AuthenticationForm()
 		return render(request, "appweb/index.html", {'form':form})
+
+def home(request):
+	return render(request,"appweb/home.html")	
 
 def cadastroUsuario(request):
 	if request.method == "POST":
