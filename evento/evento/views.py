@@ -5,14 +5,15 @@ from appweb.forms.cadastroEventoForm import EventoForm
 from appweb.forms.cadastroAtividadeForm import AtividadeForm
 
 def cadastroAtividade(request):
+	user = request.user
 	if request.method == "POST":		
-		form = AtividadeForm(request.POST)		
+		form = AtividadeForm(request.POST, user=user)		
 		if form.is_valid():
 			atividade = form.save(commit = False) 								
 			atividade.save()
 			return redirect('home')			
-	else:
-		form = AtividadeForm(request=request)
+	else:		
+		form = AtividadeForm(user=user)
 		return render(request, 'appweb/cadastroAtividade.html', {'form': form})
 
 def cadastroEvento(request):
