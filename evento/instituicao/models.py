@@ -14,6 +14,12 @@ class Instituicao(models.Model):
 	uf = models.CharField(max_length=2)
 	evento = models.ManyToManyField('evento.Evento', through='Associacao')
 
+	def get_eventos(self):
+		return self.evento.all()
+
+	def __str__(self):
+		return self.nome_instituicao
+
 class Associacao(models.Model):
 	evento = models.ForeignKey('evento.Evento')
 	instituicao = models.ForeignKey('Instituicao')
