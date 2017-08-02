@@ -4,4 +4,5 @@ from evento.models import Evento
 class EventoForm(forms.ModelForm):
 	class Meta:
 		model = Evento
-		fields = ('nome_evento','usuario_criador')
+		exclude = ['usuario_criador']
+		fields = ('nome_evento','usuario_criador','status')

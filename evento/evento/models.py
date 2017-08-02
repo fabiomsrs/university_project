@@ -17,7 +17,7 @@ class TipoAtividade(Enum):
 
 class Atividade(models.Model):
 	nome_atividade = models.CharField(max_length=25)	
-	descricao = models.CharField(max_length=25)
+	descricao = models.TextField(max_length=250)
 	valor_atividade = models.FloatField(null=True)	
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)	
@@ -30,6 +30,9 @@ class Evento(models.Model):
 	def get_inscricoes_pagas(self):
 		inscricoes = self.minhas_inscricoes.get_queryset()
 		return inscricoes.filter(meu_pagamento__pago=True)
+
+	def __str__(self):
+		return self.nome_evento
 
 class Cupom(models.Model):
 	desconto = models.IntegerField()
