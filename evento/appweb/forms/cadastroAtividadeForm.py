@@ -12,4 +12,4 @@ class AtividadeForm(forms.ModelForm):
 
 	class Meta:
 		model = Atividade		
-		fields = ('nome_atividade','evento','descricao')				
+		fields = ('nome_atividade','evento','valor_atividade','tipo_atividade','descricao')				
