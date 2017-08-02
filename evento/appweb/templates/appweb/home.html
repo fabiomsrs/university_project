@@ -1,6 +1,6 @@
 {% extends './base.html' %}
 {% block content%}
-<a href="{% url 'cadastro_evento' %}" class="top-menu">criar evento</a><br/>
-<a href="{% url 'cadastro_atividade' %}" class="top-menu">adicionar atividade aos meus eventos</a><br/>
+<a href="{% url 'evento:cadastro_evento' %}" class="top-menu">criar evento</a><br/>
+<a href="{% url 'evento:cadastro_atividade' %}" class="top-menu">adicionar atividade aos meus eventos</a><br/>
 <a href="{% url 'logout' %}" class="top-menu">sair</a>
 {%endblock%}
