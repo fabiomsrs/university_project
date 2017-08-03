@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator
 
 from enumfields import EnumField
 from enumfields import Enum
@@ -56,6 +57,6 @@ class Evento(models.Model):
 		return self.nome_evento
 
 class Cupom(models.Model):
-	desconto = models.IntegerField()
+	desconto = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
 	evento = models.ForeignKey('Evento',related_name='meus_cupons',default='')	
 	
