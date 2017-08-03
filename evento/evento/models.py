@@ -52,6 +52,13 @@ class Evento(models.Model):
 	def get_meus_cupons(self):
 		return self.meus_cupons.all()
 
+	def get_minhas_tags(self):
+		self.tagevento_set.all()
+
+	def get_minhas_instituicoes(self):
+		self.instituicao_set.all()
+
+
 	def __str__(self):
 		return self.nome_evento
 
