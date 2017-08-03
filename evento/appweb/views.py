@@ -29,9 +29,9 @@ def logout(request):
 	logout(request)
 
 def home(request):
-	return render(request,"appweb/home.html")	
+	return render(request,"appweb/home.html")
 
-def cadastroUsuario(request):
+def cadastro_usuario(request):
 	if request.method == "POST":
 		form = UsuarioForm(request.POST)
 		if form.is_valid():
@@ -42,6 +42,6 @@ def cadastroUsuario(request):
 			return HttpResponse("<h1>CADASTRO INVALIDO</h1>")
 	else:
 		form = UsuarioForm()
-		return render(request, 'appweb/cadastroUsuario.html', {'form': form})
+		return render(request, 'appweb/form.html', {'form': form})
 
 	

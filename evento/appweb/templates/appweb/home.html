@@ -2,5 +2,7 @@
 {% block content%}
 <a href="{% url 'evento:cadastro_evento' %}" class="top-menu">criar evento</a><br/>
 <a href="{% url 'evento:cadastro_atividade' %}" class="top-menu">adicionar atividade aos meus eventos</a><br/>
+<a href="{% url 'tag:tag_usuario' %}" class="top-menu">adicionar tags a mim</a><br/>
+<a href="{% url 'tag:tag_evento' %}" class="top-menu">adicionar tags aos meus eventos</a><br/>
 <a href="{% url 'logout' %}" class="top-menu">sair</a>
 {%endblock%}
