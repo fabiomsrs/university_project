@@ -6,4 +6,5 @@ from . import views
 urlpatterns = [	
 	url(r'^cadastroEvento/$',views.cadastroEvento, name='cadastro_evento'),
 	url(r'^cadastroAtividade/$',views.cadastroAtividade, name='cadastro_atividade'),
+	url(r'^cadastroCupom/$',views.cadastroCupom, name='cadastro_cupom'),
 ]
