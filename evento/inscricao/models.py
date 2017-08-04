@@ -12,7 +12,7 @@ class Inscricao(models.Model):
 	def get_evento(self):
 		return self.evento
 
-	def get_evento(self):
+	def get_usuario(self):
 		return self.usuario
 
 	def __str__(self):
