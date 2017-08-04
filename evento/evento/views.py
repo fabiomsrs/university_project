@@ -5,7 +5,7 @@ from appweb.forms.cadastroEventoForm import EventoForm
 from appweb.forms.cadastroAtividadeForm import AtividadeForm
 from appweb.forms.cadastroCupomForm import CupomForm
 
-def cadastroAtividade(request):
+def cadastro_atividade(request):
 	user = request.user
 	if request.method == "POST":		
 		form = AtividadeForm(request.POST, user=user)		
@@ -15,8 +15,11 @@ def cadastroAtividade(request):
 			return redirect('home')			
 	else:		
 		form = AtividadeForm(user=user)
-		return render(request, 'appweb/cadastroAtividade.html', {'form': form})
+		return render(request, 'appweb/form.html', {'form': form})
 
+<<<<<<< HEAD
+def cadastro_evento(request):
+=======
 def cadastroCupom(request):
 	user = request.user
 	print(request.POST,"\n\n")
@@ -35,6 +38,7 @@ def cadastroCupom(request):
 
 
 def cadastroEvento(request):
+>>>>>>> master
 	if request.method == "POST":
 		form = EventoForm(request.POST)
 		if form.is_valid():
@@ -44,4 +48,4 @@ def cadastroEvento(request):
 			return redirect('home')			
 	else:
 		form = EventoForm()
-		return render(request, 'appweb/cadastroEvento.html', {'form': form})
+		return render(request, 'appweb/form.html', {'form': form})
