@@ -6,7 +6,10 @@ def adicionar_tag_usuario(request):
 	if request.method == "POST":		
 		form = AddTagUsuario(request.POST)			
 		if form.is_valid():
-			tag_usuario = form.save()						
+			tag_usuario = form.save(commit=False)
+			tag_usuario.save()
+			tag_usuario.usuario.add(request.user)
+			form.save_m2m()						
 			return redirect('home')			
 	else:		
 		form = AddTagUsuario()
