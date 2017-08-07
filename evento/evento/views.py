@@ -17,7 +17,7 @@ def cadastro_atividade(request):
 		form = AtividadeForm(user=user)
 		return render(request, 'appweb/form.html', {'form': form})
 
-def cadastroCupom(request):
+def cadastro_cupom(request):
 	user = request.user
 	print(request.POST,"\n\n")
 	if request.method == "POST":				
@@ -33,7 +33,7 @@ def cadastroCupom(request):
 		form = CupomForm(user=user)
 		return render(request, 'appweb/cadastroCupom.html', {'form': form})
 
-def cadastroEvento(request):
+def cadastro_evento(request):
 	if request.method == "POST":
 		form = EventoForm(request.POST)
 		if form.is_valid():
