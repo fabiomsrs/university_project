@@ -5,8 +5,8 @@ from . import views
 
 urlpatterns = [	
 
-	url(r'^cadastroEvento/$',views.cadastro_evento, name='cadastro_evento'),
-	url(r'^cadastroAtividade/$',views.cadastro_atividade, name='cadastro_atividade'),
-	url(r'^cadastroCupom/$',views.cadastro_cupom, name='cadastro_cupom'),
+	url(r'^cadastroEvento/$',views.cadastroEvento.as_view(), name='cadastro_evento'),
+	url(r'^cadastroAtividade/$', views.CadastroAtividade.as_view(), name='cadastro_atividade'),
+	url(r'^cadastroCupom/$',views.cadastroCupom.as_view(), name='cadastro_cupom'),
 
 ]
