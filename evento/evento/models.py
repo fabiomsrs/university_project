@@ -3,6 +3,8 @@ from django.core.validators import MaxValueValidator
 
 from enumfields import EnumField
 from enumfields import Enum
+from unittest.util import _MAX_LENGTH
+from django.template.defaultfilters import default
 # Create your models here.
 
 class TipoEvento(Enum):
@@ -45,6 +47,10 @@ class Evento(models.Model):
 	nome_evento = models.CharField(max_length=25)	
 	usuario_criador = models.ForeignKey('auth.User',related_name='meus_eventos',default='')	
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
+	tipo_evento = EnumField(TipoEvento,max_length=25,default = '')
+	
+	def get_tipo_evento(self):
+		return self.tipo_evento
 
 	def get_usuario(self):
 		return self.usuario_criador
