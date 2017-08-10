@@ -6,6 +6,12 @@ from enumfields import Enum
 # Create your models here.
 
 class TipoEvento(Enum):
+	CONGRESSO = 'congresso'
+	SIMPOSIO = 'simposio'
+	SEMANAS =  'semanas'
+	OUTROS = ''
+	
+class StatusEvento(Enum):
 	EM_ANDAMENTO = 'em andamento'
 	NOVO = 'novo'
 	INSCRICOES_ABERTAS = 'inscricoes abertas'
@@ -38,7 +44,7 @@ class Atividade(models.Model):
 class Evento(models.Model):
 	nome_evento = models.CharField(max_length=25)	
 	usuario_criador = models.ForeignKey('auth.User',related_name='meus_eventos',default='')	
-	status = EnumField(TipoEvento,max_length=25,default=TipoEvento.NOVO)
+	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
 
 	def get_usuario(self):
 		return self.usuario_criador
