@@ -81,6 +81,10 @@ class Evento(models.Model):
 
 class CheckIn(models.Model):
 	organizador = models.charFiels(max_length=45)
+	inscricao = models.ForeignKey('inscricao.RelacionamentoAtividadeInscricao')
+
+	def get_organizador(self):
+		return self.organizador
 
 
 class Responsavel(models.Model):
