@@ -4,6 +4,32 @@
 {%block content%}
 		{%block js%}
 			<script language="javascript">		
+			$(document).ready(function(){					    	
+				    	eventos = {{ form.eventos | safe}};
+				        atividades_por_evento = {{form.atividades_por_evento | safe}};				       	
+			        	evento = $("#id_evento option:selected").text();
+						$("#id_atividade").empty();
+						for (let [e, eatividades] of Object.entries(atividades_por_evento)){								
+							if(e == evento){																			
+								for(atividade in eatividades){									
+												$("#id_atividade")
+													.append($("<option></option>")
+					                                .attr("value", eatividades[atividade])
+	                	                			.text(eatividades[atividade]));					
+								}							
+							}
+						}
+
+
+						
+			       		$("#id_evento").empty();							
+						$.each(eventos, function(v){
+							$("#id_evento").append($("<option></option>")
+								.attr("value", eventos[v])
+								.text(eventos[v]));
+						});
+				       	
+		       	});			       	    	
 				$(document).ready(function(){	
 				    $("#id_evento").change(function(){populateAtividade()});});			       	    	
 				    	eventos = {{ form.eventos | safe}};
