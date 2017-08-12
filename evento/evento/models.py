@@ -31,6 +31,7 @@ class Atividade(models.Model):
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
 	local = models.CharField(max_length=100)
+	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
 
 	def get_descricao(self):
 		return self.descricao
@@ -41,8 +42,11 @@ class Atividade(models.Model):
 	def get_valor_atividade(self):
 		return self.valor_atividade
 
-	def get_evento():
+	def get_evento(self):
 		return self.evento
+
+	def get_responsavel(self):
+		return self.responsavel
 
 	def __str__(self):
 		return self.nome_atividade
@@ -77,12 +81,11 @@ class Evento(models.Model):
 
 class CheckIn(models.Model):
 	organizador = models.charFiels(max_length=45)
-	
+
 
 class Responsavel(models.Model):
 	nome_responsavel = models.CharField(max_length=45)
 	descricao_responsavel = models.CharField(max_length=250)
-	atividade = models.ForeignKey('Atividade', related_name='responsaveis', default='')
 
 	def get_descricao(self):
 		return self.descricao_responsavel
