@@ -9,8 +9,8 @@ class TipoEvento(Enum):
 	CONGRESSO = 'congresso'
 	SIMPOSIO = 'simposio'
 	SEMANAS =  'semanas'
+	NOVO = 'novo'
 	OUTROS = ''
-
 	
 class StatusEvento(Enum):
 	EM_ANDAMENTO = 'em andamento'
@@ -20,18 +20,23 @@ class StatusEvento(Enum):
 class TipoAtividade(Enum):
 	SEMINARIO = 'seminario'
 	PALESTRA = 'palestra'
-	SIMPOSIO = 'simposio'	
+	SIMPOSIO = 'simposio'
 	DEFAULT = ''
 
 class Atividade(models.Model):
 	nome_atividade = models.CharField(max_length=25)	
 	descricao = models.TextField(max_length=250)
 	valor_atividade = models.FloatField(null=True)	
+	usuario_criador = models.ForeignKey('auth.User',related_name='minhas_atividades',default='')	
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
+	local = models.CharField(max_length=100)
 
 	def get_descricao(self):
 		return self.descricao
+
+	def get_usuario(self):
+		return self.usuario_criador
 
 	def get_valor_atividade(self):
 		return self.valor_atividade
@@ -69,6 +74,21 @@ class Evento(models.Model):
 
 	def __str__(self):
 		return self.nome_evento
+
+class CheckIn(models.Model):
+	organizador = models.charFiels(max_length=45)
+	
+
+class Responsavel(models.Model):
+	nome_responsavel = models.CharField(max_length=45)
+	descricao_responsavel = models.CharField(max_length=250)
+	atividade = models.ForeignKey('Atividade', related_name='responsaveis', default='')
+
+	def get_descricao(self):
+		return self.descricao_responsavel
+
+	def __str__(self):
+		return self.nome_responsavel
 
 class Cupom(models.Model):
 	desconto = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
