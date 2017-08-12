@@ -31,6 +31,7 @@ class Atividade(models.Model):
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
 	local = models.CharField(max_length=100)
+	ispadrao = models.BooleanField()
 	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
 
 	def get_descricao(self):
@@ -75,7 +76,6 @@ class Evento(models.Model):
 	def get_minhas_instituicoes(self):
 		self.instituicao_set.all()
 
-
 	def __str__(self):
 		return self.nome_evento
 
@@ -95,5 +95,5 @@ class Responsavel(models.Model):
 
 class Cupom(models.Model):
 	desconto = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
-	evento = models.ForeignKey('Evento',related_name='meus_cupons',default='')	
-	
+	evento = models.ForeignKey('Evento',related_name='meus_cupons',default='')
+	isautomatico = models.BooleanField()
