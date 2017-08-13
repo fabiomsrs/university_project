@@ -10,7 +10,7 @@ class TipoEvento(Enum):
 	SIMPOSIO = 'simposio'
 	SEMANAS =  'semanas'
 	OUTROS = ''
-
+	NOVO = 'novo'
 	
 class StatusEvento(Enum):
 	EM_ANDAMENTO = 'em andamento'
