@@ -56,7 +56,7 @@ class Evento(models.Model):
 	nome_evento = models.CharField(max_length=25)	
 	usuario_criador = models.ForeignKey('auth.User',related_name='meus_eventos',default='')	
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
-	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites')
+	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)
 
 	def get_usuario(self):
 		return self.usuario_criador
@@ -81,8 +81,8 @@ class Evento(models.Model):
 		return self.nome_evento
 
 class CheckIn(models.Model):
-	organizador = models.charField(max_length=45)
-	inscricao = models.ForeignKey('inscricao.RelacionamentoAtividadeInscricao')
+	organizador = models.CharField(max_length=45)
+	inscricao = models.ForeignKey('inscricao.RelacionamentoAtividadeInscricao',null=True)
 
 	def get_organizador(self):
 		return self.organizador
@@ -99,12 +99,15 @@ class Responsavel(models.Model):
 		return self.nome_responsavel
 
 class Cupom(models.Model):
-	nome_cupom = model.CharField(max_length=50)
+	nome_cupom = models.CharField(max_length=50)
 	desconto = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
 	evento = models.ForeignKey('Evento',related_name='meus_cupons',default='')
 	isautomatico = models.BooleanField()
 	data_de_inicio = models.DateTimeField()
 	data_de_fim = models.DateTimeField()
+
+	def get_periodo(self):
+		return data_de_fim - data_de_fim
 
 	def __str__(self):
 		return self.nome_cupom
