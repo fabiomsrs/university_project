@@ -9,8 +9,7 @@ from enumfields import Enum
 class TipoEvento(Enum):
 	CONGRESSO = 'congresso'
 	SIMPOSIO = 'simposio'
-	SEMANAS =  'semanas'
-	NOVO = 'novo'
+	SEMANAS =  'semanas'	
 	OUTROS = ''
 	
 class StatusEvento(Enum):
