@@ -14,4 +14,4 @@ class Inscricao(View):
 
 	def get(self, request, *args, **kwargs):
 		form = self.form()		
-		return render(request, 'appweb/ajaxForm.html', {'form': form})		
+		return render(request, 'appweb/ajaxForm.html', {'form': form})
