@@ -57,7 +57,7 @@ class Evento(models.Model):
 	nome_evento = models.CharField(max_length=25)	
 	usuario_criador = models.ForeignKey('auth.User',related_name='meus_eventos',default='')	
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
-	evento_satelite = models.ForeignKey('evento')
+	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites')
 
 	def get_usuario(self):
 		return self.usuario_criador
