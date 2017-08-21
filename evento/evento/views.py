@@ -4,6 +4,7 @@ from appweb.forms.cadastroUsuarioForm import UsuarioForm
 from appweb.forms.cadastroEventoForm import EventoForm
 from appweb.forms.cadastroAtividadeForm import AtividadeForm
 from appweb.forms.cadastroCupomForm import CupomForm
+from appweb.forms.associarEventoForm import FormEventoAssociado
 
 class CadastroAtividade(View):
 	form = AtividadeForm
@@ -44,3 +45,17 @@ class cadastroEvento(View):
 	def get(self, request, *args, **kwargs):
 		form = self.form()
 		return render(request, 'appweb/form.html', {'form': form})
+
+class associarEvento(View):
+	form = FormEventoAssociado
+	def post(self,request, *args, **kwargs):
+		form = self.form(request.POST)
+		if form.is_valid():
+			evento = form.save()
+
+	def get(self, request, *args, **kwargs):
+		form = self.form(user=self.request.user)
+		return render(request, 'appweb/form.html', {'form': form})
+
+
+	
