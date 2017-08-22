@@ -4,19 +4,17 @@
 	{%block js%}
 			<script language="javascript">		
 				$(document).ready(function(){	
-				    $("#id_evento").change(function(){populateEventoSatelite()});});			       	  	    	
-				   	    evento_satelite = {{evento_satelite}};				       					       	
-
-				       	function populateEventoSatelite(){								       		
-							evento = $("#id_evento_principal option:selected").text();
+				    $("#id_evento_principal").change(function(){populateEventoSatelite()});});			       	  	    	    			       					    
+				       	function populateEventoSatelite(){						       		
+				       		evento_satelite = {{ evento_satelite | safe}};
+							evento = $("#id_evento_principal option:selected").text();							
 							$("#id_evento_satelite").empty();
-							for (let e of evento_satelite){								
-								if(e != evento){																																
+							for (let e of evento_satelite){																
+								if(e != evento){																
 									$("#id_evento_satelite")
 										.append($("<option></option>")
 		                                .attr("value", e)
-	    	                			.text(e));					
-					
+	    	                			.text(e));
 								}
 							}
 				       	}

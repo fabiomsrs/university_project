@@ -47,9 +47,8 @@ class cadastroEvento(View):
 	def post(self, request, *args, **kwargs):	
 		form = self.form(request.POST)
 		if form.is_valid():
-			evento = form.save(commit = False) 					
-			evento.usuario_criador = request.user
-			evento.save()
+			evento = form.save() 					
+			evento.membros.add(request.user)			
 			return redirect('home')			
 	def get(self, request, *args, **kwargs):
 		form = self.form()
@@ -58,16 +57,18 @@ class cadastroEvento(View):
 class associarEvento(View):
 	form_evento_principal = FormEventoPrincipal	
 
-	def post(self,request, *args, **kwargs):
-		pass
-		#form = self.form(request.POST)
-		#if form.is_valid():
-		#	evento = form.save()
+	def post(self,request, *args, **kwargs):						
+		for evento in Evento.objects.all():
+			if evento.nome_evento == request.POST['evento_satelite']:
+				print(evento,  Evento.objects.get(pk=int(request.POST['evento_principal'])),"\n")
+				evento.evento_principal = Evento.objects.get(pk=int(request.POST['evento_principal']))
+				evento.save()
+		return redirect('home')				
 
 	def get(self, request, *args, **kwargs):
-		form_evento_principal = self.form_evento_principal()
-		evento_satelite = self.request.user.meus_eventos.all()
+		evento_satelite = [str(evento) for evento in self.request.user.meus_eventos.all()]
 		eventos = Evento.objects.all()
+		form_evento_principal = self.form_evento_principal(eventos=eventos)		
 		context = {'form_evento_principal':form_evento_principal, 'eventos':eventos, 'evento_satelite':evento_satelite}
 		return render(request, 'appweb/associarEvento.html', context)
 
