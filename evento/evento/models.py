@@ -56,7 +56,7 @@ class Atividade(models.Model):
 	
 class Evento(models.Model):
 	nome_evento = models.CharField(max_length=25)	
-	membros = models.ManyToMany('auth.User',related_name='usuarios_membros')
+	equipe = models.ManyToManyField('auth.User',related_name='usuarios_membros')
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
 	tipo_evento = EnumField(TipoEvento,max_length=25,default = '')
 	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)
