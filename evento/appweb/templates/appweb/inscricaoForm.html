@@ -6,8 +6,8 @@
 			<script language="javascript">		
 				$(document).ready(function(){	
 				    $("#id_evento").change(function(){populateAtividade()});});			       	    	
-				    	eventos = {{ form.eventos | safe}};
-				        atividades_por_evento = {{form.atividades_por_evento | safe}};				       	
+				    	eventos = {{ eventos | safe}};
+				        atividades_por_evento = {{atividades_por_evento | safe}};				       					        
 				       	populateEventos();
 						$("#id_atividade").empty();						
 
@@ -24,12 +24,12 @@
 							evento = $("#id_evento option:selected").text();
 							$("#id_atividade").empty();
 							for (let [e, eatividades] of Object.entries(atividades_por_evento)){								
-								if(e == evento){																			
-									for(atividade in eatividades){									
+								if(e == evento){	
+									cont = 0																		
+									for(atividade in eatividades){				
+													cont=cont+1;															
 													$("#id_atividade")
-														.append($("<option></option>")
-						                                .attr("value", eatividades[atividade])
-		                	                			.text(eatividades[atividade]));					
+														.append($("<li><label for='id_atividade_"+ cont +"'> <input type='checkbox' name='atividade' id='id_atividade_"+cont+"' value ='"+cont+"'/> "+eatividades[atividade]+" </label></li>"));														
 									}							
 								}
 							}

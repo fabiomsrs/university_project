@@ -1,5 +1,5 @@
 from django.db import models
-
+from evento.models import Evento
 # Create your models here.
 class Inscricao(models.Model):	
 	usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='minhas_inscricoes')	
@@ -17,6 +17,15 @@ class Inscricao(models.Model):
 
 	def __str__(self):
 		return self.usuario.first_name
+
+	def save(self, *args, **kwargs):
+		#evitar inscricoes repetidas
+		for inscricao in Inscricao.objects.all():
+			if self.evento == inscricao.evento and self.usuario == inscricao.usuario:
+				raise Exception('Inscricao ja existe')
+
+		super(Inscricao, self).save(*args, **kwargs)
+
 
 class RelacionamentoAtividadeInscricao(models.Model):
 	atividade = models.ForeignKey('evento.Atividade')
