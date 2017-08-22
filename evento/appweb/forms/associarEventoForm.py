@@ -1,22 +1,14 @@
 from django import forms
 from evento.models import Evento
-class FormEventoAssociado(forms.ModelForm):
-	"""docstring for FormAssociarEventos"""
-	def __init__(self, arg):
-		self.user = kwargs.pop("user")
-		super(FormAssociarEventos, self).__init__(*args, **kwargs)
-		
-		self.fields['evento_principal'].queryset =  self.Evento.objects.all()
-		self.fields['evento_principal'].label =  'associar a evento'
+from django.contrib.auth.models import User
+
+class FormEventoPrincipal(forms.ModelForm):
+	eventos = Evento.objects.all()
+	evento_satelite = forms.ChoiceField(choices=([(evento, evento) for evento in eventos]))
+	
 			
 	class Meta:
 		model = Evento	
-		fields = ('nome_evento','evento_principal')
+		fields = ['evento_principal']
 
-class FormEventoAssocia(forms.ModelForm):
-	def __init__(self, arg):
-		self.user = kwargs.pop("user")
-		super(FormAssociarEventos, self).__init__(*args, **kwargs)
-		
-		self.fields['evento_principal'].queryset =  self.Evento.objects.all()
-		self.fields['evento_principal'].label =  'associar a evento'
+	
