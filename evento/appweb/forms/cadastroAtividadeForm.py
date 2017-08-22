@@ -1,5 +1,5 @@
 from django import forms
-from evento.models import Atividade
+from evento.models import Atividade, Responsavel
 
 class AtividadeForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
@@ -11,5 +11,12 @@ class AtividadeForm(forms.ModelForm):
 		self.fields['evento'].label = 'Evento pertencente'
 
 	class Meta:
-		model = Atividade		
-		fields = ('nome_atividade','evento','valor_atividade','tipo_atividade','descricao')				
+		model = Atividade
+		exclude = ['usuario_criador','responsavel']		
+		fields = '__all__'
+
+
+class ResponsavelForm(forms.ModelForm):	
+	class Meta:
+		model = Responsavel		
+		fields = '__all__'		
