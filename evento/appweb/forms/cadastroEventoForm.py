@@ -5,4 +5,4 @@ class EventoForm(forms.ModelForm):
 	class Meta:
 		model = Evento
 		exclude = ['usuario_criador']
-		fields = ('nome_evento','usuario_criador','status','tipo_evento')
+		fields = ('nome_evento','usuario_criador','status','tipo_evento', 'data_inicio', 'hora_inicio', 'data_de_fim', 'hora_fim')
