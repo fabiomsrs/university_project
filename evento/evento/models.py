@@ -33,6 +33,8 @@ class Atividade(models.Model):
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
 	local = models.CharField(max_length=100)
+	data_inicio = models.DateTimeField()
+	data_de_fim = models.DateTimeField()
 	ispadrao = models.BooleanField()
 	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
 
@@ -60,10 +62,12 @@ class Evento(models.Model):
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
 	tipo_evento = EnumField(TipoEvento,max_length=25,default = '')
 	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)
-	
+	data_inicio = models.DateTimeField()
+	data_de_fim = models.DateTimeField()
 
 	def get_tipo_evento(self):
 		return self.tipo_evento
+
 	def get_usuario(self):
 		return self.usuario_criador
 
@@ -82,6 +86,12 @@ class Evento(models.Model):
 
 	def get_minhas_instituicoes(self):
 		self.instituicao_set.all()
+
+	def get_data_inicio(self):
+		return self.data_inicio
+
+	def get_data_de_fim(self):
+		return self.data_de_fim
 
 	def __str__(self):
 		return self.nome_evento
