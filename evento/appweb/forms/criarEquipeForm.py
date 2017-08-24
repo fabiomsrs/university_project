@@ -11,13 +11,13 @@ class EquipeForm(forms.ModelForm):
 		self.user = kwargs.pop("user")
 		super(EquipeForm, self).__init__(*args, **kwargs)
 
-		self.fields['equipe'].queryset = auth.USER.objects.filter(first_name != self.user)
+		self.fields['membros'].queryset = auth.USER.objects.filter(first_name != self.user)
 		self.fields['nome_evento'].queryset = self.Evento.objects.all()
 
 
 	class Meta:
 		model = Evento
-		fields = ('equipe','nome_evento')
+		fields = ('membros','nome_evento')
 
 
 

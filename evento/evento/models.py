@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
 from django.utils import timezone
-
 from enumfields import EnumField
 from enumfields import Enum
 from unittest.util import _MAX_LENGTH
@@ -56,7 +55,7 @@ class Atividade(models.Model):
 	
 class Evento(models.Model):
 	nome_evento = models.CharField(max_length=25)	
-	equipe = models.ManyToManyField('auth.User',related_name='usuarios_membros')
+	membros = models.ManyToManyField('auth.User',related_name='meus_eventos')
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
 	tipo_evento = EnumField(TipoEvento,max_length=25,default = '')
 	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)
