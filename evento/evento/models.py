@@ -6,7 +6,7 @@ from django.template.defaultfilters import default
 from enumfields import EnumField
 from enumfields import Enum
 from unittest.util import _MAX_LENGTH
-from .managers import EventoSateliteManager
+from .managers import EventoSateliteManager,CupomAutomaticoManager
 # Create your models here.
 
 class TipoEvento(Enum):
@@ -132,11 +132,13 @@ class Cupom(models.Model):
 	desconto = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
 	evento = models.ForeignKey('Evento',related_name='meus_cupons',default='')
 	isautomatico = models.BooleanField()
-	data_de_inicio = models.DateTimeField()
-	data_de_fim = models.DateTimeField()
+	data_de_inicio = models.DateTimeField(null=True)
+	data_de_fim = models.DateTimeField(null=True)
+	objects = CupomAutomaticoManager()
 
 	def get_periodo(self):
 		return data_de_fim - data_de_fim
 
 	def __str__(self):
 		return self.nome_cupom
+
