@@ -1,8 +1,10 @@
 from django import forms
+from django.forms import extras
 from evento.models import Evento
+
 
 class EventoForm(forms.ModelForm):
 	class Meta:
 		model = Evento
-		exclude = ['usuario_criador']
-		fields = ('nome_evento','usuario_criador','status','tipo_evento', 'data_inicio', 'hora_inicio', 'data_de_fim', 'hora_fim')
+		exclude = ['membros','evento_principal','data_inicio','data_de_fim','hora_inicio','hora_fim']
+		fields = '__all__'
