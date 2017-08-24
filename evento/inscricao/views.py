@@ -3,6 +3,7 @@ from django.views import View
 from appweb.forms.inscricaoForm import InscricaoForm
 from evento.models import Evento,Atividade
 from inscricao.models import RelacionamentoAtividadeInscricao
+from pagamento.models import Pagamento
 # Create your views here.
 class Inscricao(View):
 	form = InscricaoForm
@@ -16,7 +17,7 @@ class Inscricao(View):
 			inscricao.save()
 			for atividade in request.POST['atividade']:				
 				RelacionamentoAtividadeInscricao(atividade=Atividade.objects.get(pk=int(atividade)),inscricao=inscricao).save()
-
+			Pagamento(inscricao=inscricao).save()
 			return redirect('home')
 
 	def get(self, request, *args, **kwargs):		
