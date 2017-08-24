@@ -10,8 +10,6 @@ class Pagamento(models.Model):
 	def is_pago(self):
 		return self.pago
 
-	def get_incricao(self):
-		return self.inscricao.get()
 			
 	#setValorTotal atribui ao valor total, o valor de todas atividades que inscricao possui
 	def get_valor_total(self):
