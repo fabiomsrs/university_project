@@ -12,5 +12,6 @@ class CupomForm(forms.ModelForm):
 		self.fields['desconto'].label = 'Desconto em porcento'
 
 	class Meta:
-		model = Cupom		
-		fields = ('desconto','evento')				
+		model = Cupom
+		exclude = ['data_de_fim','data_de_inicio']		
+		fields = '__all__'				

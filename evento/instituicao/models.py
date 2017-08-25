@@ -12,9 +12,7 @@ class TipoAssociacao(Enum):
 class Instituicao(models.Model):
 	nome_instituicao = models.CharField(max_length=25)
 	uf = models.CharField(max_length=2)
-	evento = models.ManyToManyField('evento.Evento', through='Associacao')
-
-	
+	evento = models.ManyToManyField('evento.Evento', through='Associacao')	
 
 	def __str__(self):
 		return self.nome_instituicao
