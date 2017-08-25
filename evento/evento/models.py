@@ -2,7 +2,6 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from django.utils import timezone
 from django.template.defaultfilters import default
-
 from enumfields import EnumField
 from enumfields import Enum
 from unittest.util import _MAX_LENGTH
@@ -41,21 +40,6 @@ class Atividade(models.Model):
 	ispadrao = models.BooleanField()
 	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
 
-	def get_descricao(self):
-		return self.descricao
-
-	def get_usuario(self):
-		return self.usuario_criador
-
-	def get_valor_atividade(self):
-		return self.valor_atividade
-
-	def get_evento(self):
-		return self.evento
-
-	def get_responsavel(self):
-		return self.responsavel
-
 	def __str__(self):
 		return self.nome_atividade
 	
@@ -70,39 +54,9 @@ class Evento(models.Model):
 	data_de_fim = models.DateField(null=True)
 	hora_fim = models.TimeField(null=True)
 
-	def get_tipo_evento(self):
-		return self.tipo_evento
-
-	def get_usuario(self):
-		return self.usuario_criador
-
-	def get_status(self):
-		return self.status
-
 	def get_inscricoes_pagas(self):
 		inscricoes = self.minhas_inscricoes.get_queryset()
 		return inscricoes.filter(meu_pagamento__pago=True)
-
-	def get_meus_cupons(self):
-		return self.meus_cupons.all()
-
-	def get_minhas_tags(self):
-		self.tagevento_set.all()
-
-	def get_minhas_instituicoes(self):
-		self.instituicao_set.all()
-
-	def get_data_inicio(self):
-		return self.data_inicio
-
-	def get_hora_inicio(self):
-		return self.hora_inicio
-
-	def get_data_de_fim(self):
-		return self.data_de_fim
-
-	def get_hora_fim(self):
-		return self.hora_fim
 
 	def __str__(self):
 		return self.nome_evento
@@ -113,17 +67,12 @@ class CheckIn(models.Model):
 	organizador = models.CharField(max_length=45)
 	inscricao = models.ForeignKey('inscricao.RelacionamentoAtividadeInscricao',null=True)
 
-	def get_organizador(self):
-		return self.organizador
-
 
 class Responsavel(models.Model):
 	nome_responsavel = models.CharField(max_length=45)
 	descricao_responsavel = models.CharField(max_length=250)
 
-	def get_descricao(self):
-		return self.descricao_responsavel
-
+	
 	def __str__(self):
 		return self.nome_responsavel
 
@@ -136,8 +85,7 @@ class Cupom(models.Model):
 	data_de_fim = models.DateTimeField(null=True)
 	objects = CupomAutomaticoManager()
 
-	def get_periodo(self):
-		return data_de_fim - data_de_fim
+	
 
 	def __str__(self):
 		return self.nome_cupom

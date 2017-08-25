@@ -17,6 +17,7 @@ class Inscricao(models.Model):
 				raise Exception('Inscricao ja existe')			
 		super(Inscricao, self).save(*args, **kwargs)
 
-class RelacionamentoAtividadeInscricao(models.Model):	
+
+class RelacionamentoAtividadeInscricao(models.Model):
 	atividade = models.ForeignKey('evento.Atividade')
 	inscricao = models.ForeignKey('Inscricao')
