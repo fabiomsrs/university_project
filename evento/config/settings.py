@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'appweb',
+    'cupom',
     'inscricao',
     'instituicao',
     'pagamento',   

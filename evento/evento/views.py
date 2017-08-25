@@ -3,14 +3,12 @@ from django.views import View
 from appweb.forms.cadastroUsuarioForm import UsuarioForm
 from appweb.forms.cadastroEventoForm import EventoForm
 from appweb.forms.cadastroAtividadeForm import AtividadeForm
-from appweb.forms.cadastroCupomForm import CupomForm
 from appweb.forms.criarEquipeForm import EquipeForm
 from django.template.context import RequestContext
 from appweb.forms.cadastroAtividadeForm import AtividadeForm,ResponsavelForm
 from appweb.forms.associarEventoForm import FormEventoPrincipal
 from evento.models import Evento
 from django.template.context_processors import request
-
 
 class CadastroAtividade(View):
 	atividade_form = AtividadeForm
@@ -32,19 +30,6 @@ class CadastroAtividade(View):
 				atividade.usuario_criador = self.request.user							
 				atividade.save()
 				return redirect('home')
-
-class cadastroCupom(View):
-	form = CupomForm
-	def get(self, request, *args, **kwargs):		
-		form = self.form(user=self.request.user)
-		return render(request, 'appweb/cadastroCupom.html', {'form': form})
-
-	def post(self, request, *args, **kwargs):			
-		form = self.form(request.POST, user=self.request.user)		
-		if form.is_valid():
-			cupom = form.save(commit = False) 								
-			cupom.save()
-			return redirect('home')		
 
 class cadastroEvento(View):
 	form = EventoForm
@@ -76,12 +61,9 @@ class associarEvento(View):
 		context = {'form_evento_principal':form_evento_principal, 'eventos':eventos, 'evento_satelite':evento_satelite}
 		return render(request, 'appweb/associarEvento.html', context)
 		
-	
-
 class criarEquipe(View):
 	form = EquipeForm
-	
-	
+		
 	def post(self, request, *args, **kwargs):
 		form = self.form(request.POST)
 		if form.is_valid():
@@ -90,8 +72,3 @@ class criarEquipe(View):
 	def get(self, request, *args, **kwargs):
 		form = EquipeForm
 		return render_to_response(request, 'appweb/criaEquipe.html', {'form': form})
-	
-	
-	
-	
-	

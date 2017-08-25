@@ -1,5 +1,5 @@
 from django import forms
-from evento.models import Cupom
+from cupom.models import Cupom
 
 class CupomForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
@@ -14,4 +14,4 @@ class CupomForm(forms.ModelForm):
 	class Meta:
 		model = Cupom
 		exclude = ['data_de_fim','data_de_inicio']		
-		fields = '__all__'				
+		fields = '__all__'	
