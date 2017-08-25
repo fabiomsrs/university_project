@@ -39,6 +39,13 @@ class Atividade(models.Model):
 	hora_fim = models.TimeField(null=True)
 	ispadrao = models.BooleanField()
 	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
+	atividades_proibidas = models.ManyToManyField('Atividade')
+
+	def checar_concomitancia(self, atividade):		
+		if atividade in self.atividades_proibidas.all():
+			return False 
+		else:
+			return True
 
 	def __str__(self):
 		return self.nome_atividade
@@ -55,8 +62,11 @@ class Evento(models.Model):
 	hora_fim = models.TimeField(null=True)
 
 	def get_inscricoes_pagas(self):
-		inscricoes = self.minhas_inscricoes.get_queryset()
-		return inscricoes.filter(meu_pagamento__pago=True)
+		if self.minhas_inscricoes != None:
+			inscricoes = self.minhas_inscricoes.get_queryset()
+			return inscricoes.filter(meu_pagamento__pago=True)
+		else:
+			return "nenhuma inscricao paga"
 
 	def __str__(self):
 		return self.nome_evento
