@@ -12,5 +12,6 @@ urlpatterns = [
 	#urls de outras apps
 	url(r'^evento/',include('evento.urls', namespace='evento')),
     url(r'^inscricao/',include('inscricao.urls', namespace='inscricao')),  		
-    url(r'^tag/',include('tag.urls', namespace='tag')),  		
+    url(r'^tag/',include('tag.urls', namespace='tag')), 
+    url(r'^cupom/',include('cupom.urls', namespace='cupom')), 
 ]
