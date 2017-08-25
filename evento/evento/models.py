@@ -13,17 +13,20 @@ class TipoEvento(Enum):
 	SIMPOSIO = 'simposio'
 	SEMANAS =  'semanas'	
 	OUTROS = ''
+
 	
 class StatusEvento(Enum):
 	EM_ANDAMENTO = 'em andamento'
 	NOVO = 'novo'
 	INSCRICOES_ABERTAS = 'inscricoes abertas'
 
+
 class TipoAtividade(Enum):
 	SEMINARIO = 'seminario'
 	PALESTRA = 'palestra'
 	SIMPOSIO = 'simposio'
 	DEFAULT = ''
+
 
 class Atividade(models.Model):
 	nome_atividade = models.CharField(max_length=25)	
@@ -49,6 +52,7 @@ class Atividade(models.Model):
 
 	def __str__(self):
 		return self.nome_atividade
+
 	
 class Evento(models.Model):
 	nome_evento = models.CharField(max_length=25)	
@@ -73,6 +77,7 @@ class Evento(models.Model):
 
 	objects = EventoSateliteManager()
 
+
 class CheckIn(models.Model):
 	organizador = models.CharField(max_length=45)
 	inscricao = models.ForeignKey('inscricao.RelacionamentoAtividadeInscricao',null=True)
@@ -82,12 +87,12 @@ class Responsavel(models.Model):
 	nome_responsavel = models.CharField(max_length=45)
 	descricao_responsavel = models.CharField(max_length=250)
 
-	
 	def __str__(self):
 		return self.nome_responsavel
 
+
 class Cupom(models.Model):
-	nome_cupom = models.CharField(max_length=50)
+	nome_cupom = models.CharField(max_length=25)
 	desconto = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
 	evento = models.ForeignKey('Evento',related_name='meus_cupons',default='')
 	isautomatico = models.BooleanField()
@@ -95,8 +100,12 @@ class Cupom(models.Model):
 	data_de_fim = models.DateTimeField(null=True)
 	objects = CupomAutomaticoManager()
 
-	
-
 	def __str__(self):
 		return self.nome_cupom
 
+
+class Trilha(models.Model):
+	nome = models.CharField(max_length=25)
+	tema = models.CharField(max_length=25)
+	atividades = models.ManyToManyField('Atividade')
+	coordenadores = models.ManyToManyField('auth.User')
