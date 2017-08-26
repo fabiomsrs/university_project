@@ -2,10 +2,11 @@
 {%load bootstrap%}
 
 {%block content%}
-			<form method="POST">{% csrf_token %}
-				<div class="col-sm-10">
-		        {{ form|bootstrap}}            	           	        
-		        <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Sign up</button>
-		        </div>	            
-           </form>
+			<div class="col-sm-10">
+				<form method="POST">{% csrf_token %}
+					
+			        {{ form|bootstrap}}            	           	        
+			        <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Sign up</button>
+			    </form>
+			</div>
 {% endblock %}
