@@ -4,3 +4,10 @@ nav .nav-wrapper{
 nav .brand-logo{
 	margin-left: 100px;
 }
+.page-footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    background-color: #004d40 ; 
+
+}
