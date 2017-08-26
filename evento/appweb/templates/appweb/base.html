@@ -6,16 +6,24 @@
     <!--Import materialize.css-->
 	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/materialize.css'%}">
 	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/materialize.min.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/base.css'%}">
 	<title>Sartuday Eventos</title>	
 </head>
+<header>
+	<div class="navbar-fixed ">
+    <nav>
+      <div class="nav-wrapper ">
+        <a href="#!" class="brand-logo">Saturday'S Events</a>
+      </div>
+    </nav>
+  </div>
+</header>
 <body>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="cssMaterialize/js/materialize.min.js"></script>
+    <script type="text/javascript" src="{% static 'cssMaterialize/js/materialize.js'}"></script>
+    <script type="text/javascript" src="{% static 'cssMaterialize/js/materialize.min.js'}"></script>
 			
 
-			<div class="page-header">			        
-		        <h1><a href="{% url 'home'%}" class="top-menu" >Saturday's Event</a	></h1>
-			</div>	
 	<div class="container">
 	<div class="row" id="pwd-container">	
 		{% block content %}
@@ -23,4 +31,5 @@
 	</div>
 	</div>
 </body>
+
 </html>
