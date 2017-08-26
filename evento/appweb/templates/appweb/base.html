@@ -1,6 +1,9 @@
 {% load static %}
 <html>
 <head>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" href="{% static 'cssMaterialize/js/materialize.js'}"></script>
+    <script type="text/javascript" href="{% static 'cssMaterialize/js/materialize.min.js'}"></script>
 	<!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -19,11 +22,6 @@
   </div>
 </header>
 <body>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="{% static 'cssMaterialize/js/materialize.js'}"></script>
-    <script type="text/javascript" src="{% static 'cssMaterialize/js/materialize.min.js'}"></script>
-			
-
 	<div class="container">
 	<div class="row" id="pwd-container">	
 		{% block content %}
@@ -39,5 +37,6 @@
     © Saturday'S Events
     </div>
   </div>
+
 </footer>
 </html>
