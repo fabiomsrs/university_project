@@ -59,7 +59,7 @@ class Evento(models.Model):
 	membros = models.ManyToManyField('auth.User',related_name='meus_eventos')
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
 	tipo_evento = EnumField(TipoEvento,max_length=25,default = '')
-	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)
+	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)	
 	data_inicio = models.DateField(null=True)
 	hora_inicio = models.TimeField(null=True)
 	data_de_fim = models.DateField(null=True)
@@ -77,6 +77,9 @@ class Evento(models.Model):
 
 	objects = EventoSateliteManager()
 
+class Agenda(models.Model):
+	evento = models.OneToOneField('Evento', related_name='minha_agenda')
+
 
 class CheckIn(models.Model):
 	organizador = models.CharField(max_length=45)
@@ -90,8 +93,15 @@ class Responsavel(models.Model):
 	def __str__(self):
 		return self.nome_responsavel
 
+
 class Trilha(models.Model):
 	nome = models.CharField(max_length=25)
 	tema = models.CharField(max_length=25)
 	atividades = models.ManyToManyField('Atividade')
 	coordenadores = models.ManyToManyField('auth.User')
+
+
+class Pacote(models.Model):
+	nome_pacote = models.CharField(max_length=25)
+	atividades = models.ManyToManyField('Atividade')
+	valor_total = models.FloatField(null=True)

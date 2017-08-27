@@ -48,8 +48,7 @@ class associarEvento(View):
 
 	def post(self,request, *args, **kwargs):						
 		for evento in Evento.objects.all():
-			if evento.nome_evento == request.POST['evento_satelite']:
-				print(evento,  Evento.objects.get(pk=int(request.POST['evento_principal'])),"\n")
+			if evento.nome_evento == request.POST['evento_satelite']:				
 				evento.evento_principal = Evento.objects.get(pk=int(request.POST['evento_principal']))
 				evento.save()
 		return redirect('home')					
