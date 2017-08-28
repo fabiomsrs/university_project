@@ -65,8 +65,23 @@ class Evento(models.Model):
 	data_de_fim = models.DateField(null=True)
 	hora_fim = models.TimeField(null=True)
 
+	def set_evento_principal(self, evento):
+		if self.evento_principal == None and evento.evento_principal == None:
+			self.evento_principal = evento
+			return True
+		else:
+			raise Exception("associcao error")	
+
+	def get_todas_atividades(self):		
+		if self.meus_eventos_satelites.count != 0:			
+			for evento_satelite in self.meus_eventos_satelites.all():
+				for atividade in evento_satelite.minhas_atividades.all():
+					self.minhas_atividades.add(atividade)
+
+		return self.minhas_atividades.all()
+
 	def get_inscricoes_pagas(self):
-		if self.minhas_inscricoes != None:
+		if self.minhas_inscricoes.count() != 0:
 			inscricoes = self.minhas_inscricoes.get_queryset()
 			return inscricoes.filter(meu_pagamento__pago=True)
 		else:
