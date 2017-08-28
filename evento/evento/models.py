@@ -36,19 +36,16 @@ class Atividade(models.Model):
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
 	local = models.ForeignKey('espacoFisico.EspacoFisico', related_name='atividades')
-	data_inicio = models.DateField(null=True)
-	hora_inicio = models.TimeField(null=True)
-	data_de_fim = models.DateField(null=True)
-	hora_fim = models.TimeField(null=True)
+	horario_inicio = models.DateField(null=True)
+	horario_final = models.DateField(null=True)
 	ispadrao = models.BooleanField()
 	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
 	atividades_proibidas = models.ManyToManyField('Atividade')
 
 	def set_atividades_proibidas(self):
 		for atividade in Atividade.objects.all():
-			if self.data_inicio >= atividade.data_inicio and self.data_de_fim <= atividade.data_de_fim and self.local == atividade.local:
-				if self.hora_inicio >= atividade.hora_inicio and self.hora_fim <= atividade.hora_fim:
-					self.atividades_proibidas.add(atividade)							
+			if self.horario_inicio >= atividade.horario_inicio and self.horario_final <= atividade.horario_fim and self.local == atividade.local:				
+				self.atividades_proibidas.add(atividade)							
 
 	def checar_concomitancia(self, atividade):		
 		if atividade in self.atividades_proibidas.all():
