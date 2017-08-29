@@ -6,7 +6,7 @@ from cupom.models import Cupom
 
 # Create your views here.
 
-class cadastroCupom(View):
+class CadastroCupom(View):
 	form = CupomForm
 	def get(self, request, *args, **kwargs):		
 		form = self.form(user=self.request.user)

@@ -35,7 +35,7 @@ class Atividade(models.Model):
 	usuario_criador = models.ForeignKey('auth.User',related_name='minhas_atividades',default='')	
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
-	local = models.ForeignKey('espacoFisico.EspacoFisico', related_name='atividades')
+	local = models.ForeignKey('espacoFisico.EspacoFisico', related_name='atividades',null=True)
 	horario_inicio = models.DateField(null=True)
 	horario_final = models.DateField(null=True)
 	ispadrao = models.BooleanField()
@@ -75,13 +75,11 @@ class Evento(models.Model):
 		else:
 			raise Exception("associcao error")
 
-	def get_todas_atividades(self):		
+	def set_todas_atividades(self):		
 		if self.meus_eventos_satelites.count != 0:			
 			for evento_satelite in self.meus_eventos_satelites.all():
 				for atividade in evento_satelite.minhas_atividades.all():
 					self.minhas_atividades.add(atividade)
-
-		return self.minhas_atividades.all()
 
 	def get_inscricoes_pagas(self):
 		if self.minhas_inscricoes.count() != 0:

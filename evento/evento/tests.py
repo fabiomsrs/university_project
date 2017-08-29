@@ -37,7 +37,6 @@ class EventoTest(TestCase):
 			evento.set_evento_principal(evento1)
 		
 		
-
 	def test_inscricoes_pagas(self):
 		user = User.objects.create(username="user_teste1",password="123")
 		user.save()
@@ -63,7 +62,8 @@ class EventoTest(TestCase):
 		atividade0.save()
 		atividade1 = Atividade(nome_atividade="teste1", evento=evento1, valor_atividade=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade1.save()
-		self.assertEqual(evento.get_todas_atividades().count(),2)
+		evento.set_todas_atividades()
+		self.assertEqual(evento.minhas_atividades.all().count(),2)
 
 class AtividadeTest(TestCase):
 	def set_atividades_proibidas(self):

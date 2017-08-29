@@ -43,9 +43,9 @@ class CadastroEvento(View):
 		form = self.form()
 		return render(request, 'appweb/form.html', {'form': form})
 
+
 class AssociarEvento(View):
 	form_evento_principal = FormEventoPrincipal	
-
 	def post(self,request, *args, **kwargs):						
 		for evento in Evento.objects.all():
 			if evento.nome_evento == request.POST['evento_satelite']:				
@@ -65,6 +65,7 @@ class CriarEquipe(View):
 		
 	def post(self, request, *args, **kwargs):
 		form = self.form(request.POST)
+
 		if form.is_valid():
 			equipe = form.save()
 			
