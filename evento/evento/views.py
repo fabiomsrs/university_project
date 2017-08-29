@@ -31,6 +31,7 @@ class CadastroAtividade(View):
 				atividade.save()
 				return redirect('home')
 
+
 class CadastroEvento(View):
 	form = EventoForm
 	def post(self, request, *args, **kwargs):	
