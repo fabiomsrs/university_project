@@ -1,5 +1,10 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//evento/migrations/0008_evento_tipo_evento.py=utf-8
 encoding//instituicao/migrations/0002_auto_20170727_1013.py=utf-8
 encoding//instituicao/migrations/0003_auto_20170729_0159.py=utf-8
 encoding//pagamento/migrations/0002_auto_20170727_1040.py=utf-8
+=======
+encoding//evento/migrations/0001_initial.py=utf-8
+encoding//inscricao/migrations/0001_initial.py=utf-8
+>>>>>>> 0d6129069f6afbb143c36bf27fec82ecf2f836fa
