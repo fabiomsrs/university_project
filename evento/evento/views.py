@@ -31,7 +31,8 @@ class CadastroAtividade(View):
 				atividade.save()
 				return redirect('home')
 
-class cadastroEvento(View):
+
+class CadastroEvento(View):
 	form = EventoForm
 	def post(self, request, *args, **kwargs):	
 		form = self.form(request.POST)
@@ -44,13 +45,12 @@ class cadastroEvento(View):
 		return render(request, 'appweb/form.html', {'form': form})
 
 
-class associarEvento(View):
+class AssociarEvento(View):
 	form_evento_principal = FormEventoPrincipal	
-
 	def post(self,request, *args, **kwargs):						
 		for evento in Evento.objects.all():
 			if evento.nome_evento == request.POST['evento_satelite']:				
-				evento.evento_principal = Evento.objects.get(pk=int(request.POST['evento_principal']))
+				evento.set_evento_principal(Evento.objects.get(pk=int(request.POST['evento_principal'])))
 				evento.save()
 		return redirect('home')					
 
@@ -61,31 +61,12 @@ class associarEvento(View):
 		context = {'form_evento_principal':form_evento_principal, 'eventos':eventos, 'evento_satelite':evento_satelite}
 		return render(request, 'appweb/associarEvento.html', context)
 		
-class criarEquipe(View):
+class CriarEquipe(View):
 	form = EquipeForm
 		
 	def post(self, request, *args, **kwargs):
 		form = self.form(request.POST)
 
-def cadastro_cupom(request):
-	user = request.user
-	print(request.POST,"\n\n")
-	if request.method == "POST":				
-		form = CupomForm(request.POST, user=user)		
-		if form.is_valid():
-			cupom = form.save(commit = False) 								
-			cupom.save()
-			return redirect('home')
-		else:
-			print('ERROOOOOOOR')
-			print(request.POST,"\n\n")				
-	else:		
-		form = CupomForm(user=user)
-		return render(request, 'appweb/cadastroCupom.html', {'form': form})
-
-def cadastro_evento(request):
-	if request.method == "POST":
-		form = EventoForm(request.POST)
 		if form.is_valid():
 			equipe = form.save()
 			

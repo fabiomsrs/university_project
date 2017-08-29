@@ -35,14 +35,17 @@ class Atividade(models.Model):
 	usuario_criador = models.ForeignKey('auth.User',related_name='minhas_atividades',default='')	
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
-	local = models.CharField(max_length=100)
-	data_inicio = models.DateField(null=True)
-	hora_inicio = models.TimeField(null=True)
-	data_de_fim = models.DateField(null=True)
-	hora_fim = models.TimeField(null=True)
+	local = models.ForeignKey('espacoFisico.EspacoFisico', related_name='atividades',null=True)
+	horario_inicio = models.DateField(null=True)
+	horario_final = models.DateField(null=True)
 	ispadrao = models.BooleanField()
 	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
 	atividades_proibidas = models.ManyToManyField('Atividade')
+
+	def set_atividades_proibidas(self):
+		for atividade in Atividade.objects.all():
+			if self.horario_inicio >= atividade.horario_inicio and self.horario_final <= atividade.horario_fim and self.local == atividade.local:				
+				self.atividades_proibidas.add(atividade)							
 
 	def checar_concomitancia(self, atividade):		
 		if atividade in self.atividades_proibidas.all():
@@ -59,14 +62,27 @@ class Evento(models.Model):
 	membros = models.ManyToManyField('auth.User',related_name='meus_eventos')
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
 	tipo_evento = EnumField(TipoEvento,max_length=25,default = '')
-	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)
+	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)	
 	data_inicio = models.DateField(null=True)
 	hora_inicio = models.TimeField(null=True)
 	data_de_fim = models.DateField(null=True)
-	hora_fim = models.TimeField(null=True)
+	hora_fim = models.TimeField(null=True)	
+
+	def set_evento_principal(self, evento):
+		if self.evento_principal == None and evento.evento_principal == None:
+			self.evento_principal = evento
+			return True
+		else:
+			raise Exception("associcao error")
+
+	def set_todas_atividades(self):		
+		if self.meus_eventos_satelites.count != 0:			
+			for evento_satelite in self.meus_eventos_satelites.all():
+				for atividade in evento_satelite.minhas_atividades.all():
+					self.minhas_atividades.add(atividade)
 
 	def get_inscricoes_pagas(self):
-		if self.minhas_inscricoes != None:
+		if self.minhas_inscricoes.count() != 0:
 			inscricoes = self.minhas_inscricoes.get_queryset()
 			return inscricoes.filter(meu_pagamento__pago=True)
 		else:
@@ -76,6 +92,9 @@ class Evento(models.Model):
 		return self.nome_evento
 
 	objects = EventoSateliteManager()
+
+class Agenda(models.Model):
+	evento = models.OneToOneField('Evento', related_name='minha_agenda')
 
 
 class CheckIn(models.Model):
@@ -90,8 +109,15 @@ class Responsavel(models.Model):
 	def __str__(self):
 		return self.nome_responsavel
 
+
 class Trilha(models.Model):
 	nome = models.CharField(max_length=25)
 	tema = models.CharField(max_length=25)
 	atividades = models.ManyToManyField('Atividade')
 	coordenadores = models.ManyToManyField('auth.User')
+
+
+class Pacote(models.Model):
+	nome_pacote = models.CharField(max_length=25)
+	atividades = models.ManyToManyField('Atividade')
+	valor_total = models.FloatField(null=True)

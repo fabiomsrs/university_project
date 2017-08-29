@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'pagamento',   
     'evento',
     'tag',
+    'espacoFisico',
     'bootstrapform',    
     'django.contrib.admin',
     'django.contrib.auth',
@@ -86,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'evento',
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
