@@ -1,58 +1,29 @@
 {% load static %}
 <html>
 <head>
-<<<<<<< HEAD
-	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css'%}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.min.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'cssBootstrap/bootstrap.min.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'cssBootstrap/bootstrap-theme.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cssPersonalizado/basePersonalizado.css'%}">
 	<script src="{% static 'jquery-3.2.1.js' %}"></script>
-	<title>Saturday Eventos</title>	
-=======
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" href="{% static 'cssMaterialize/js/materialize.js'}"></script>
-    <script type="text/javascript" href="{% static 'cssMaterialize/js/materialize.min.js'}"></script>
-	<!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/materialize.css'%}">
-	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/materialize.min.css'%}">
-	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/base.css'%}">
-	<title>Sartuday Eventos</title>	
->>>>>>> 0d6129069f6afbb143c36bf27fec82ecf2f836fa
+	<title>Saturday Eventos</title>	
 </head>
 <header>
-	<div class="navbar-fixed ">
-    <nav>
-      <div class="nav-wrapper ">
-        <a href="#!" class="brand-logo">Saturday'S Events</a>
-      </div>
+    <nav class="navbar ">
+        <a class="navbar-brand " href="{% url 'home'%}">Saturday'S Event's</a>
     </nav>
-  </div>
 </header>
 <body>
-<<<<<<< HEAD
-			<div class="page-header">			        
-		        <h1><a href="{% url 'home'%}" class="top-menu" >Saturday's Event</a	></h1>
-			</div>	
-=======
->>>>>>> 0d6129069f6afbb143c36bf27fec82ecf2f836fa
 	<div class="container">
-	<div class="row" id="pwd-container">	
-		{% block content %}
-        {% endblock %}
+    	<div class="row" id="pwd-container">	
+    		{% block content %}
+            {% endblock %}
+    	</div>
 	</div>
-	</div>
-
-
-
 </body>
-<footer class="page-footer">
-  <div class="footer-copyright">
-    <div class="container">
-    © Saturday'S Events
+<footer class="footer navbar-fixed-bottom" ">
+    <div class="container-fluid">
+        <span>© Saturday'S Events</span>
     </div>
-  </div>
-
 </footer>
-
-
 </html>

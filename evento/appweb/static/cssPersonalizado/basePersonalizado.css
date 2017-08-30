@@ -1,0 +1,32 @@
+html {
+    position: relative;
+
+}
+body {
+    margin: 0 0 auto;
+    height: auto;
+    padding-bottom: 10%;
+
+}
+.navbar{
+	background-color: #004d40;
+	border-radius: 0px;
+	height: 64px;
+	box-shadow:  0 0 13px gray;
+
+}
+.navbar-brand{
+	position: absolute;
+  	color: #fff;
+  	font-size: 2.1rem;
+  	font-family: sans-serif;
+  
+}
+.footer{
+	position: absolute;
+	background-color: #004d40;
+	border-radius: 0px;
+	height: 50px;
+}
+
+

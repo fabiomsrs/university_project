@@ -1,8 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-
 from inscricao.models import Inscricao, RelacionamentoAtividadeInscricao
-from evento.models import Evento,Atividade
+from evento.models import Evento,Atividade,Responsavel
 from pagamento.models import Pagamento
 
 # Create your tests here.
@@ -10,13 +9,16 @@ from pagamento.models import Pagamento
 class ModelTeste(TestCase):
 	
 	def test_payment(self):
-		user = User.objects.create(username="user_teste",password="123")
+		user = User.objects.create(username="user_teste2",password="123")
 		user.save()
-		evento = Evento(nome_evento="teste_teste", usuario_criador=user)
+		evento = Evento(nome_evento="teste_teste2")
 		evento.save()
-		atividade0 = Atividade(nome_atividade="teste", evento=evento, valor_atividade=10,descricao=" ")
+		evento.membros.add(user)
+		responsavel =  Responsavel(nome_responsavel='responsavel teste',descricao_responsavel='descricao')
+		responsavel.save()
+		atividade0 = Atividade(nome_atividade="teste", evento=evento, valor_atividade=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user)
 		atividade0.save()
-		atividade1 = Atividade(nome_atividade="teste1", evento=evento, valor_atividade=10,descricao=" ")
+		atividade1 = Atividade(nome_atividade="teste1", evento=evento, valor_atividade=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user)
 		atividade1.save()
 		inscricao = Inscricao(usuario=user,evento=evento)
 		inscricao.save()
@@ -27,5 +29,5 @@ class ModelTeste(TestCase):
 		inscricao.relacionamentoatividadeinscricao_set.set([r,r1])
 		Pagamento(inscricao=inscricao).save()
 
-		self.assertIs(inscricao.meu_pagamento.get_valor_total() > 0, True)
-		self.assertEqual(inscricao.meu_pagamento.get_valor_total(), 20)		
+		self.assertIs(inscricao.meu_pagamento.calcular_valor_total() > 0, True)
+		self.assertEqual(inscricao.meu_pagamento.calcular_valor_total(), 20)		

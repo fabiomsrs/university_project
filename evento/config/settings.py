@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'pagamento',   
     'evento',
     'tag',
+    'espacoFisico',
     'bootstrapform',    
     'django.contrib.admin',
     'django.contrib.auth',
