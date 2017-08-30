@@ -29,7 +29,7 @@ class TipoAtividade(Enum):
 
 
 class Inscrevivel(models.Model):
-	valor = models.FloatField()	
+	valor = models.FloatField(default=0)	
 	class Meta:
 		abstract = True
 
@@ -89,7 +89,7 @@ class Evento(models.Model):
 			return inscricoes.filter(meu_pagamento__pago=True)
 		else:
 			return "nenhuma inscricao paga"
-				
+
 	def __str__(self):
 		return self.nome_evento
 
@@ -100,8 +100,11 @@ class EventoInscrevivel(Evento,Inscrevivel):
 	
 	def set_valor_total(self):
 		self.valor = 0
-		for atividade in self.minhas_atividades:
-			self.valor += atividade.valor
+		if self.evento_ptr.minhas_atividades.count() != 0:
+			for atividade in self.evento_ptr.minhas_atividades.all():
+				self.valor += atividade.valor
+		else:
+			return "nenhuma atividade cadastrada"				
 		
 
 

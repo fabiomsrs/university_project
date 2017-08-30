@@ -2,21 +2,20 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 import datetime
 from cupom.models import Cupom
-from evento.models import Evento,Atividade,Responsavel
+from evento.models import Evento,Atividade,Responsavel,EventoInscrevivel
 from espacoFisico.models import EspacoFisico
 # Create your tests here.
 
-class CupomTest(TestCase):
-
-	def test_valor_cupom_automatico(self):
-		pass
-
-
-	def test_periodo_cupom_automatico(self):		
-		pass
-		#self.assertIs(cupom.get_periodo() > 0, True) #TODO
-
 class EventoTest(TestCase):
+	def test_set_valor_total(self):
+		user = User.objects.create(username="user_teste",password="123")
+		user.save()
+		evento = EventoInscrevivel(nome_evento="teste_teste")		
+		evento.save()
+		evento.membros.add(user)		
+
+		self.assertEqual(evento.set_valor_total(), "nenhuma atividade cadastrada")			
+		
 	
 	def test_set_evento_principal(self):
 		user = User.objects.create(username="user_teste",password="123")

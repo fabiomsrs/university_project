@@ -5,6 +5,7 @@ from evento.models import Evento
 class Inscricao(models.Model):	
 	usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='minhas_inscricoes')	
 	evento = models.ForeignKey('evento.Evento', on_delete=models.CASCADE, related_name='minhas_inscricoes')
+	cupom = models.OneToOneField('cupom.Cupom',related_name='meu_cupom',null=True)
 	#inscricao = models.OneToOneField('inscricao.Inscricao',related_name='meu_pagamento',default='')	
 	#atividade = models.ManyToManyField('evento.Atividade', through='RelacionamentoAtividadeInscricao')
 
