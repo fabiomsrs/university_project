@@ -4,8 +4,8 @@ from evento.models import Evento
 
 class Inscricao(models.Model):	
 	usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='minhas_inscricoes')	
-	#evento = models.ForeignKey('evento.Evento', on_delete=models.CASCADE, related_name='minhas_inscricoes')
-	#atividade = models.ManyToManyField('evento.Atividade', through='RelacionamentoAtividadeInscricao')
+	evento = models.ForeignKey('evento.Evento', on_delete=models.CASCADE, related_name='minhas_inscricoes')
+	atividade = models.ManyToManyField('evento.Atividade', through='RelacionamentoAtividadeInscricao')
 
 	def __str__(self):
 		return self.usuario.first_name
@@ -19,6 +19,5 @@ class Inscricao(models.Model):
 
 
 class RelacionamentoAtividadeInscricao(models.Model):
-	pass
-	#atividade = models.ForeignKey('evento.Atividade')
-	#inscricao = models.ForeignKey('Inscricao')
+	atividade = models.ForeignKey('evento.Atividade')
+	inscricao = models.ForeignKey('Inscricao')
