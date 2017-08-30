@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.views import View
 from appweb.forms.inscricaoForm import InscricaoForm
 from evento.models import Evento,Atividade
-from inscricao.models import RelacionamentoAtividadeInscricao
+from inscricao.models import ItemInscricao
 from pagamento.models import Pagamento
 # Create your views here.
 class Inscricao(View):
@@ -16,7 +16,7 @@ class Inscricao(View):
 			inscricao.usuario = request.user
 			inscricao.save()
 			for atividade in request.POST['atividade']:				
-				RelacionamentoAtividadeInscricao(atividade=Atividade.objects.get(pk=int(atividade)),inscricao=inscricao).save()
+				ItemInscricao(atividade=Atividade.objects.get(pk=int(atividade)),inscricao=inscricao).save()
 			Pagamento(inscricao=inscricao).save()
 			return redirect('home')
 

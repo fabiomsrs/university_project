@@ -10,10 +10,10 @@ class Pagamento(models.Model):
 			
 	#Calcular_Valor_Total atribui ao valor total, o valor de todas atividades que inscricao possui
 	def calcular_valor_total(self):
-		relacionamentos = self.inscricao.relacionamentoatividadeinscricao_set.all()
+		itens = self.inscricao.meus_itens.all()
 		self.valor_total = 0
-		for i in relacionamentos:
-			self.valor_total += i.atividade.valor_atividade
+		for i in itens:
+			self.valor_total += i.atividade.valor
 
 		return self.valor_total
 

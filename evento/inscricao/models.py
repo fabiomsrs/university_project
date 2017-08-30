@@ -5,7 +5,8 @@ from evento.models import Evento
 class Inscricao(models.Model):	
 	usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='minhas_inscricoes')	
 	evento = models.ForeignKey('evento.Evento', on_delete=models.CASCADE, related_name='minhas_inscricoes')
-	atividade = models.ManyToManyField('evento.Atividade', through='RelacionamentoAtividadeInscricao')
+	#inscricao = models.OneToOneField('inscricao.Inscricao',related_name='meu_pagamento',default='')	
+	#atividade = models.ManyToManyField('evento.Atividade', through='RelacionamentoAtividadeInscricao')
 
 	def __str__(self):
 		return self.usuario.first_name
@@ -17,7 +18,6 @@ class Inscricao(models.Model):
 				raise Exception('Inscricao ja existe')			
 		super(Inscricao, self).save(*args, **kwargs)
 
-
-class RelacionamentoAtividadeInscricao(models.Model):
+class ItemInscricao(models.Model):
+	inscricao = models.ForeignKey('Inscricao', on_delete=models.CASCADE, related_name='meus_itens')
 	atividade = models.ForeignKey('evento.Atividade')
-	inscricao = models.ForeignKey('Inscricao')

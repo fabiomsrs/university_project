@@ -28,10 +28,14 @@ class TipoAtividade(Enum):
 	DEFAULT = ''
 
 
-class Atividade(models.Model):
+class Inscrevivel(models.Model):
+	valor = models.FloatField()	
+	class Meta:
+		abstract = True
+
+class Atividade(Inscrevivel):
 	nome_atividade = models.CharField(max_length=25)	
 	descricao = models.TextField(max_length=250)
-	valor_atividade = models.FloatField(null=True)	
 	usuario_criador = models.ForeignKey('auth.User',related_name='minhas_atividades',default='')	
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
@@ -63,10 +67,8 @@ class Evento(models.Model):
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
 	tipo_evento = EnumField(TipoEvento,max_length=25,default = '')
 	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)	
-	data_inicio = models.DateField(null=True)
-	hora_inicio = models.TimeField(null=True)
-	data_de_fim = models.DateField(null=True)
-	hora_fim = models.TimeField(null=True)	
+	data_inicio = models.DateField(null=True)	
+	data_de_fim = models.DateField(null=True)	
 
 	def set_evento_principal(self, evento):
 		if self.evento_principal == None and evento.evento_principal == None:
@@ -80,18 +82,28 @@ class Evento(models.Model):
 			for evento_satelite in self.meus_eventos_satelites.all():
 				for atividade in evento_satelite.minhas_atividades.all():
 					self.minhas_atividades.add(atividade)
-
+	
 	def get_inscricoes_pagas(self):
 		if self.minhas_inscricoes.count() != 0:
 			inscricoes = self.minhas_inscricoes.get_queryset()
 			return inscricoes.filter(meu_pagamento__pago=True)
 		else:
 			return "nenhuma inscricao paga"
-
+				
 	def __str__(self):
 		return self.nome_evento
 
 	objects = EventoSateliteManager()
+
+
+class EventoInscrevivel(Evento,Inscrevivel):
+	
+	def set_valor_total(self):
+		self.valor = 0
+		for atividade in self.minhas_atividades:
+			self.valor += atividade.valor
+		
+
 
 class Agenda(models.Model):
 	evento = models.OneToOneField('Evento', related_name='minha_agenda')
@@ -99,7 +111,7 @@ class Agenda(models.Model):
 
 class CheckIn(models.Model):
 	organizador = models.CharField(max_length=45)
-	inscricao = models.ForeignKey('inscricao.RelacionamentoAtividadeInscricao',null=True)
+	inscricao = models.ForeignKey('inscricao.ItemInscricao',null=True)
 
 
 class Responsavel(models.Model):

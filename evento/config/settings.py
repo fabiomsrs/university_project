@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'cupom',
     'inscricao',
     'instituicao',
+    'notificacao',
     'pagamento',   
     'evento',
     'tag',
