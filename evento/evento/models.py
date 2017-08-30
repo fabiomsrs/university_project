@@ -33,13 +33,13 @@ class Atividade(models.Model):
 	descricao = models.TextField(max_length=250)
 	valor_atividade = models.FloatField(null=True)	
 	usuario_criador = models.ForeignKey('auth.User',related_name='minhas_atividades',default='')	
-	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
+	#evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
 	local = models.ForeignKey('espacoFisico.EspacoFisico', related_name='atividades',null=True)
 	horario_inicio = models.DateField(null=True)
 	horario_final = models.DateField(null=True)
 	ispadrao = models.BooleanField()
-	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
+	#responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
 	atividades_proibidas = models.ManyToManyField('Atividade')
 
 	def set_atividades_proibidas(self):
@@ -62,7 +62,7 @@ class Evento(models.Model):
 	membros = models.ManyToManyField('auth.User',related_name='meus_eventos')
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
 	tipo_evento = EnumField(TipoEvento,max_length=25,default = '')
-	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)	
+	#evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)	
 	data_inicio = models.DateField(null=True)
 	hora_inicio = models.TimeField(null=True)
 	data_de_fim = models.DateField(null=True)
@@ -94,12 +94,13 @@ class Evento(models.Model):
 	objects = EventoSateliteManager()
 
 class Agenda(models.Model):
-	evento = models.OneToOneField('Evento', related_name='minha_agenda')
+	pass
+	#evento = models.OneToOneField('Evento', related_name='minha_agenda')
 
 
 class CheckIn(models.Model):
 	organizador = models.CharField(max_length=45)
-	inscricao = models.ForeignKey('inscricao.RelacionamentoAtividadeInscricao',null=True)
+	#inscricao = models.ForeignKey('inscricao.RelacionamentoAtividadeInscricao',null=True)
 
 
 class Responsavel(models.Model):
@@ -113,11 +114,11 @@ class Responsavel(models.Model):
 class Trilha(models.Model):
 	nome = models.CharField(max_length=25)
 	tema = models.CharField(max_length=25)
-	atividades = models.ManyToManyField('Atividade')
+	#atividades = models.ManyToManyField('Atividade')
 	coordenadores = models.ManyToManyField('auth.User')
 
 
 class Pacote(models.Model):
 	nome_pacote = models.CharField(max_length=25)
-	atividades = models.ManyToManyField('Atividade')
+	#atividades = models.ManyToManyField('Atividade')
 	valor_total = models.FloatField(null=True)
