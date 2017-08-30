@@ -8,6 +8,9 @@ body {
     padding-bottom: 10%;
 
 }
+#pwd-conteiner{
+	margin-left: 10%;
+}
 .navbar{
 	background-color: #004d40;
 	border-radius: 0px;

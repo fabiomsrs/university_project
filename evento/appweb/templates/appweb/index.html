@@ -21,7 +21,7 @@
           <form method="POST">
               {% csrf_token %}
               {{form.as_p}}
-              <button type="submit" name="go" class="waves-effect waves-light btn">Login</button>
+              <button type="submit" name="go" class="btn btn-success btn-md btn-block">LOGIN</button>
               <a href="{% url 'cadastro_usuario'%}">Create account</a>
           </form>
         </div>
