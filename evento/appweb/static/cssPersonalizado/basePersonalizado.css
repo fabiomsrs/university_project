@@ -8,6 +8,9 @@ body {
     padding-bottom: 10%;
 
 }
+form{
+	margin-top: 5%;
+}
 
 #pwd-conteiner{
 	margin-left: 10%;
@@ -24,9 +27,13 @@ body {
 	height: 64px;
 	margin-top: -30px;
 }
-.nome{
+.nome {
 	color: white;
 	margin-left: 4%;
+}
+.nome h2{
+	padding-top: 15px;
+	margin-left: 35%;
 }
 .navbar-brand{
 	position: absolute;

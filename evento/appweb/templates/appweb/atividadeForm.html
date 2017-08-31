@@ -15,15 +15,12 @@
 			</div>
 			
 		</nav>
-		
-
-
 		<form method="POST">{% csrf_token %}
 			<div class="col-sm-12">
 	        {{ atividade_form|bootstrap}}
 	        {{ responsavel_form|bootstrap}}
 
-	        <button type="submit" name="go" class="btn btn-success btn-md btn-block">CADASTRAR ATIVIDADE</button>
+	        <button type="submit" name="go" class="btn btn-success btn-md btn-block">SALVAR</button>
        </form>
 	{% endblock %}
 	</div>

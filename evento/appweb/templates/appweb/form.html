@@ -2,10 +2,11 @@
 {%load bootstrap%}
 
 {%block content%}
+
 			<form method="POST">{% csrf_token %}
 				<div class="col-sm-12">
 		        {{ form|bootstrap}}            	           	        
-		        <button type="submit" name="go" class="btn btn-success btn-md btn-block">CADASTRO EVENTO</button>
+		        <button type="submit" name="go" class="btn btn-success btn-md btn-block">SALVAR</button>
 		        </div>	            
            </form>
 {% endblock %}
