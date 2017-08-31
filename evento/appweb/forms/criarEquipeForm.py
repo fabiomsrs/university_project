@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from evento.models import Evento
+from core.models import Evento
 
 
 

@@ -3,7 +3,7 @@
 
 {%block content%}
 		{%block js%}
-			<script language="javascript">		
+			<script language="javascript">								
 				$(document).ready(function(){	
 				    $("#id_evento").change(function(){populateAtividade()});});			       	    	
 				    	eventos = {{ eventos | safe}};

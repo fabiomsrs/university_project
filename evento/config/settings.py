@@ -32,13 +32,10 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'appweb',
-    'cupom',
     'inscricao',
-    'instituicao',
-    'pagamento',   
-    'evento',
-    'tag',
-    'espacoFisico',
+    'notificacao',
+    'comum',   
+    'core',
     'bootstrapform',    
     'django.contrib.admin',
     'django.contrib.auth',
@@ -87,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'evento',
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
