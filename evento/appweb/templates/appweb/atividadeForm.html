@@ -3,22 +3,26 @@
 {%load bootstrap%}
 
 
-<header>
-	<nav class="navbar ">
-		<a class="navbar-brand " href="#">Cadastro Atividades</a>
-	</nav>
-</header>
+
 <body>
+
+
 	<div class="conteiner">
 		{%block content%}
-			<form method="POST">{% csrf_token %}
-				<div class="col-sm-12">
-		        {{ atividade_form|bootstrap}}
-		        {{ responsavel_form|bootstrap}}
+		<nav class="barra">
+			<div class="nome">
+				<h2>Cadastro de Atividade</h2>
+			</div>
+			
+		</nav>
+		<form method="POST">{% csrf_token %}
+			<div class="col-sm-12">
+	        {{ atividade_form|bootstrap}}
+	        {{ responsavel_form|bootstrap}}
 
-		        <button type="submit" name="go" class="btn btn-success btn-md btn-block">CADASTRAR ATIVIDADE</button>
-           </form>
-		{% endblock %}
+	        <button type="submit" name="go" class="btn btn-success btn-md btn-block">SALVAR</button>
+       </form>
+	{% endblock %}
 	</div>
 </body>
 

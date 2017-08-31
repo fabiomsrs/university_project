@@ -21,12 +21,21 @@
 				       									
 			</script>
 		{%endblock%}
+		<nav class="barra">
+			<div class="nome">
+				<h2>Associar Evento</h2>
+			</div>
+			
+		</nav>
+
+
+
 		<form method="POST">{% csrf_token %}
-			<div class="col-sm-10">
+			<div class="col-sm-12">
 	        {{form_evento_principal|bootstrap}}	
 	            	        	       
 
-	        <button type="submit" name="go" class="btn btn-success btn-md btn-block">ASSOCIAR EVENTO</button>
+	        <button type="submit" name="go" class="btn btn-success btn-md btn-block">SALVAR</button>
 	        </div>	            
        </form>
 {% endblock %}

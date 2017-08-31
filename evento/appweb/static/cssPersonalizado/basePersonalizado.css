@@ -8,6 +8,10 @@ body {
     padding-bottom: 10%;
 
 }
+form{
+	margin-top: 5%;
+}
+
 #pwd-conteiner{
 	margin-left: 10%;
 }
@@ -17,6 +21,19 @@ body {
 	height: 64px;
 	box-shadow:  0 0 13px gray;
 
+}
+.barra{
+	background-color: #26a69a;
+	height: 64px;
+	margin-top: -30px;
+}
+.nome {
+	color: white;
+	margin-left: 4%;
+}
+.nome h2{
+	padding-top: 15px;
+	margin-left: 35%;
 }
 .navbar-brand{
 	position: absolute;
@@ -31,5 +48,3 @@ body {
 	border-radius: 0px;
 	height: 50px;
 }
-
-

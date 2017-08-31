@@ -3,14 +3,12 @@ html {
     min-height: 100%;
 }
 body {
-    margin: 0 0 60px; 
+    margin: 0 0 60px;
 }
 nav .nav-wrapper{
 	background-color: #004d40 ; 
 }
-nav .brand-logo{
-	margin-left: 100px;
-}
+
 .page-footer {
     position:absolute;
     bottom:0;
