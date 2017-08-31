@@ -1,5 +1,5 @@
 from django import forms
-from evento.models import Atividade, Responsavel
+from core.models import Atividade, Responsavel
 
 class AtividadeForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):

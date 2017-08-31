@@ -1,6 +1,6 @@
 import json
 from django import forms
-from evento.models import Evento, Atividade
+from core.models import Evento, Atividade
 from inscricao.models import Inscricao
 
 class InscricaoForm(forms.Form):	

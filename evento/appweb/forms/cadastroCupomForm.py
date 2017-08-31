@@ -1,5 +1,5 @@
 from django import forms
-from cupom.models import Cupom
+from inscricao.models import Cupom
 
 class CupomForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):

@@ -7,7 +7,7 @@ from appweb.forms.criarEquipeForm import EquipeForm
 from django.template.context import RequestContext
 from appweb.forms.cadastroAtividadeForm import AtividadeForm,ResponsavelForm
 from appweb.forms.associarEventoForm import FormEventoPrincipal
-from evento.models import Evento
+from core.models import Evento
 from django.template.context_processors import request
 
 class CadastroAtividade(View):

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import extras
-from evento.models import Evento
+from core.models import Evento
 
 
 class EventoForm(forms.ModelForm):
