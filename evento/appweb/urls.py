@@ -10,7 +10,8 @@ urlpatterns = [
 	url(r'^cadastroUsuario/$',views.cadastro_usuario, name='cadastro_usuario'),
 
 	#urls de outras apps
-	url(r'^evento/',include('core.urls', namespace='core')),
+	url(r'^evento/',include('core.urls', namespace='evento')),
     url(r'^inscricao/',include('inscricao.urls', namespace='inscricao')),  		
-    url(r'^comum/',include('comum.urls', namespace='comum')),  
+    url(r'^cupom/',include('inscricao.urls', namespace='cupom')), 
+    url(r'^comum/',include('comum.urls', namespace='tag')),      
 ]
