@@ -1,14 +1,12 @@
 import json
 from django import forms
-from evento.models import Evento, Atividade
+from core.models import Evento, Atividade
 from inscricao.models import Inscricao
 
-class InscricaoForm(forms.ModelForm):	
+class InscricaoForm(forms.Form):	
+	atividade = forms.CheckboxSelectMultiple()
+	evento = forms.ChoiceField()
 	def __init__(self, *args, **kwargs):
 		self.atividades = kwargs.pop("atividades")
-		super(InscricaoForm, self).__init__(*args, **kwargs)	
-		self.fields['atividade'].widget = forms.CheckboxSelectMultiple()
-			
-	class Meta:
-		model = Inscricao		
-		fields = ('evento','atividade')			
+		super(InscricaoForm, self).__init__(*args, **kwargs)			
+	

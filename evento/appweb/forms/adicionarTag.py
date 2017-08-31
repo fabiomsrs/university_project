@@ -1,5 +1,5 @@
 from django import forms
-from tag.models import TagEvento,TagUsuario
+from comum.models import TagEvento,TagUsuario
 
 class AddTagUsuario(forms.ModelForm):
 	class Meta:

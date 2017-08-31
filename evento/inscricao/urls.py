@@ -4,5 +4,6 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-	url(r'^cadastrarInscricao/$',views.Inscricao.as_view(), name='inscricao')	
+	url(r'^cadastrarInscricao/$',views.Inscricao.as_view(), name='inscricao'),
+	url(r'^cadastroCupom/$',views.CadastroCupom.as_view(), name='cadastro_cupom'),	
 ]

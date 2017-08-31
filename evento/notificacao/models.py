@@ -1,5 +1,5 @@
 from django.db import models
-from evento.models import Evento
+from core.models import Evento
 
 # Create your models here.
 class GerenciadorDeNotificacoes:

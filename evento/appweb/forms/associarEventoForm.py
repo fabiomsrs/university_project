@@ -1,5 +1,5 @@
 from django import forms
-from evento.models import Evento
+from core.models import Evento
 from django.contrib.auth.models import User
 
 class FormEventoPrincipal(forms.ModelForm):	

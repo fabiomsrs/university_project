@@ -1,5 +1,5 @@
 from django import forms
-from evento.models import Atividade, Responsavel
+from core.models import Atividade, Responsavel
 
 class AtividadeForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
@@ -12,7 +12,7 @@ class AtividadeForm(forms.ModelForm):
 
 	class Meta:
 		model = Atividade
-		exclude = ['usuario_criador','responsavel','data_inicio','data_de_fim','hora_inicio','hora_fim','atividades_proibidas']		
+		exclude = ['usuario_criador','responsavel','horario_inicio','horario_final','atividades_proibidas','local']		
 		fields = '__all__'
 
 
