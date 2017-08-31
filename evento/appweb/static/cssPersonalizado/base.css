@@ -8,16 +8,11 @@ body {
 nav .nav-wrapper{
 	background-color: #004d40 ; 
 }
-nav .brand-logo{
-	
-}
+
 .page-footer {
     position:absolute;
     bottom:0;
     width:100%;
     background-color: #004d40 ; 
 
-}
-.card-title{
-	font-size: 15px;
 }
