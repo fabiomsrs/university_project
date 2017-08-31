@@ -32,14 +32,10 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'appweb',
-    'cupom',
     'inscricao',
-    'instituicao',
     'notificacao',
-    'pagamento',   
-    'evento',
-    'tag',
-    'espacoFisico',
+    'comum',   
+    'core',
     'bootstrapform',    
     'django.contrib.admin',
     'django.contrib.auth',
