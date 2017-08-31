@@ -4,7 +4,7 @@ from evento.models import Evento
 
 
 class EventoForm(forms.ModelForm):
-	inscricao_direta = forms.BooleanField()
+	inscricao_direta = forms.BooleanField(required=False)
 	
 	class Meta:
 		model = Evento

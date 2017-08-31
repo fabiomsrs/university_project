@@ -130,7 +130,7 @@ class Trilha(models.Model):
 	tema = models.CharField(max_length=25)
 	atividades = models.ManyToManyField('Atividade')
 	coordenadores = models.ManyToManyField('auth.User')
-
+	
 
 class Pacote(models.Model):
 	nome_pacote = models.CharField(max_length=25)
