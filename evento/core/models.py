@@ -135,12 +135,11 @@ class Responsavel(models.Model):
 		return self.nome_responsavel
 
 
-class Trilha(Inscrevivel):
-	#nome = models.CharField(max_length=25)
-	tema = models.CharField(max_length=25)
-	atividades = models.ManyToManyField('Atividade',related_name='minhas_trilhas')
-	coordenadores = models.ManyToManyField('auth.User',related_name='minhas_trilhas')
-
+class Pacote(Inscrevivel):
+	atividades = models.ManyToManyField('Atividade')
+	#atividades = models.ManyToManyField('Atividade')
+	#nome_pacote = models.CharField(max_length=25)	
+	#valor_total = models.FloatField(null=True)
 	def add_atividade(self,atividade):		
 		if self.atividades.count() > 0:
 			for a in self.atividades.all():
@@ -150,8 +149,9 @@ class Trilha(Inscrevivel):
 			self.atividades.add(atividade)
 
 
-class Pacote(Inscrevivel):
-	pacote = models.ManyToManyField('Pacote',related_name='meus_pacotes')
-	#atividades = models.ManyToManyField('Atividade')
-	#nome_pacote = models.CharField(max_length=25)	
-	#valor_total = models.FloatField(null=True)
+class Trilha(Pacote):
+	#nome = models.CharField(max_length=25)
+	tema = models.CharField(max_length=25)	
+	coordenadores = models.ManyToManyField('auth.User',related_name='minhas_trilhas')
+
+
