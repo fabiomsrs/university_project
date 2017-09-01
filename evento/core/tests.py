@@ -1,9 +1,9 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 import datetime
-from cupom.models import Cupom
-from evento.models import Evento,Atividade,Responsavel,EventoInscrevivel
-from espacoFisico.models import EspacoFisico
+from inscricao.models import Cupom
+from core.models import Evento,Atividade,Responsavel,EventoInscrevivel
+from comum.models import EspacoFisico
 # Create your tests here.
 
 class EventoTest(TestCase):
@@ -63,6 +63,27 @@ class EventoTest(TestCase):
 		atividade1.save()
 		evento.set_todas_atividades()
 		self.assertEqual(evento.minhas_atividades.all().count(),2)
+
+	def test_inscrever(self):
+		user = User.objects.create(username="user_teste",password="123")
+		user.save()
+		evento = Evento(nome_evento="teste_teste")		
+		evento.save()
+		evento.membros.add(user)
+		evento1 = Evento(nome_evento="teste_teste1",evento_principal=evento)
+		evento1.save()
+		evento1.membros.add(user)		
+		responsavel = Responsavel(nome_responsavel="responsavel teste",descricao_responsavel="descricao")
+		responsavel.save()		
+		local = EspacoFisico(nome_espaco_fisico="espaco teste")
+		local.save()
+		atividade0 = Atividade(nome_atividade="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade0.save()
+		atividade1 = Atividade(nome_atividade="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade1.save()
+		evento.set_todas_atividades()
+		atividades = [atividade0,atividade1]
+		self.assertEqual(evento.inscrever(user,atividades), atividades)
 
 class AtividadeTest(TestCase):
 	def set_atividades_proibidas(self):
