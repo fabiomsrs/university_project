@@ -7,10 +7,23 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/materialize.css'%}">
 	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/materialize.min.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'cssPersonalizado/base.css'%}">
+
 	<title>Home</title>
 </head>
-<body>
+<header>
+	 <nav>
+    <div class="nav-wrapper">
+      <a href="{% url 'home'%}" class="brand-logo">Saturday'S Events</a>
+    </div>
+  </nav>
 	
+</header>
+<body>
+	{% block content%}
+	{%endblock%}
+
+
 </body>
 </html>
 
@@ -64,8 +77,6 @@
 
 <!--
 
-{% extends './base.html' %}
-{% block content%}
 <a href="{% url 'evento:cadastro_evento' %}" class="top-menu">criar evento</a><br/>
 <a href="{% url 'evento:cadastro_atividade' %}" class="top-menu">adicionar atividade aos meus eventos</a><br/>
 <a href="{% url 'tag:tag_usuario' %}" class="top-menu">adicionar tags a mim</a><br/>
@@ -75,5 +86,4 @@
 <a href="{% url 'inscricao:inscricao' %}" class="top-menu">inscrever-se</a><br/>
 <a href="{% url 'evento:criar_equipe' %}" class="top-menu">criar_equipe</a><br/>
 <a href="{% url 'logout' %}" class="top-menu">sair</a>
-{%endblock%}
 -->
