@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 import datetime
 from inscricao.models import Cupom
-from core.models import Evento,Atividade,Responsavel,EventoInscrevivel
+from core.models import Evento,Atividade,Responsavel,EventoInscrevivel,Trilha
 from comum.models import EspacoFisico
 # Create your tests here.
 
@@ -57,9 +57,9 @@ class EventoTest(TestCase):
 		responsavel.save()		
 		local = EspacoFisico(nome_espaco_fisico="espaco teste")
 		local.save()
-		atividade0 = Atividade(nome_atividade="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade0 = Atividade(nome="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade0.save()
-		atividade1 = Atividade(nome_atividade="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade1 = Atividade(nome="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade1.save()
 		evento.set_todas_atividades()
 		self.assertEqual(evento.minhas_atividades.all().count(),2)
@@ -77,9 +77,9 @@ class EventoTest(TestCase):
 		responsavel.save()		
 		local = EspacoFisico(nome_espaco_fisico="espaco teste")
 		local.save()
-		atividade0 = Atividade(nome_atividade="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade0 = Atividade(nome="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade0.save()
-		atividade1 = Atividade(nome_atividade="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade1 = Atividade(nome="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade1.save()
 		evento.set_todas_atividades()
 		atividades = [atividade0,atividade1]
@@ -99,20 +99,18 @@ class AtividadeTest(TestCase):
 		responsavel.save()
 		local = EspacoFisico(nome_espaco_fisico="espaco teste")
 		local.save()		
-		atividade0 = Atividade(nome_atividade="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade0 = Atividade(nome="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade0.save()
-		atividade1 = Atividade(nome_atividade="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade1 = Atividade(nome="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade1.save()
 		atividade1.set_atividades_proibidas()		
 		self.assertEqual(atividade1.atividades_proibidas,[atividade0])
-		atividade2 = Atividade(nome_atividade="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade2 = Atividade(nome="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade2.save()
-		atividade3 = Atividade(nome_atividade="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=17),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=18),local=local)
+		atividade3 = Atividade(nome="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=17),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=18),local=local)
 		atividade3.save()
 		atividade3.set_atividades_proibidas()
 		self.assertEqual(atividade3.atividades_proibidas,[])
-
-
 
 	def checar_concomitancia(self):
 		user = User.objects.create(username="user_teste",password="123")
@@ -124,9 +122,34 @@ class AtividadeTest(TestCase):
 		responsavel.save()
 		local = EspacoFisico(nome_espaco_fisico="espaco teste")
 		local.save()	
-		atividade0 = Atividade(nome_atividade="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade0 = Atividade(nome="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade0.save()
-		atividade1 = Atividade(nome_atividade="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade1 = Atividade(nome="teste1", evento=evento1, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade1.save()
 		atividade0.atividades_proibidas.add(atividade1)
-		self.assertIs(atividade0.checar_concomitancia(atividade1), False)
+		self.assertIs(atividade0.isconcomitante(atividade1), True)
+
+class TesteTrila(TestCase):
+	def test_add_atividade(self):
+		user = User.objects.create(username="user_teste",password="123")
+		user.save()
+		evento = Evento(nome_evento="teste_teste")
+		evento.save()
+		evento.membros.add(user)
+		responsavel = Responsavel(nome_responsavel='responsavel teste',descricao_responsavel='descricao')
+		responsavel.save()
+		local = EspacoFisico(nome_espaco_fisico="espaco teste")
+		local.save()	
+		atividade0 = Atividade(nome="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade0.save()
+		atividade1 = Atividade(nome="teste1", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
+		atividade1.save()
+		atividade0.atividades_proibidas.add(atividade1)
+		trilha = Trilha(nome="teste",tema="teste",valor=20)	
+		trilha.usuario_criador = user
+		trilha.save()
+		trilha.add_atividade(atividade0)
+		self.assertEqual(trilha.atividades.first(), atividade0)
+		trilha.add_atividade(atividade1)
+		self.assertEqual(trilha.atividades.count(), 1)
+
