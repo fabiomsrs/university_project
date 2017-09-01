@@ -30,21 +30,9 @@ class TipoAtividade(Enum):
 
 
 class Inscrevivel(models.Model):
+	nome = models.CharField(max_length=25)	
 	valor = models.FloatField(default=0)	
-	class Meta:
-		abstract = True
-
-class Atividade(Inscrevivel):
-	nome_atividade = models.CharField(max_length=25)	
-	descricao = models.TextField(max_length=250)
-	usuario_criador = models.ForeignKey('auth.User',related_name='minhas_atividades',default='')	
-	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
-	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
-	local = models.ForeignKey('comum.EspacoFisico', related_name='atividades',null=True)
-	horario_inicio = models.DateField(null=True)
-	horario_final = models.DateField(null=True)
-	ispadrao = models.BooleanField()
-	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
+	usuario_criador = models.ForeignKey('auth.User',default='')
 	atividades_proibidas = models.ManyToManyField('Atividade')
 
 	def set_atividades_proibidas(self):
@@ -57,6 +45,19 @@ class Atividade(Inscrevivel):
 			return False 
 		else:
 			return True
+
+	class Meta:
+		abstract = True
+
+class Atividade(Inscrevivel):	
+	descricao = models.TextField(max_length=250)	
+	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
+	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
+	local = models.ForeignKey('comum.EspacoFisico', related_name='atividades',null=True)
+	horario_inicio = models.DateField(null=True)
+	horario_final = models.DateField(null=True)
+	ispadrao = models.BooleanField()
+	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
 
 	def __str__(self):
 		return self.nome_atividade
@@ -104,8 +105,8 @@ class Evento(models.Model):
 	objects = EventoSateliteManager()
 
 
-class EventoInscrevivel(Evento,Inscrevivel):
-	
+class EventoInscrevivel(Evento):
+	valor = models.FloatField(default=0)
 	def set_valor_total(self):
 		self.valor = 0
 		if self.evento_ptr.minhas_atividades.count() != 0:
@@ -133,14 +134,15 @@ class Responsavel(models.Model):
 		return self.nome_responsavel
 
 
-class Trilha(models.Model):
-	nome = models.CharField(max_length=25)
+class Trilha(Inscrevivel):
+	#nome = models.CharField(max_length=25)
 	tema = models.CharField(max_length=25)
-	atividades = models.ManyToManyField('Atividade')
-	coordenadores = models.ManyToManyField('auth.User')
+	atividades = models.ManyToManyField('Atividade',related_name='minhas_trilhas')
+	coordenadores = models.ManyToManyField('auth.User',related_name='minhas_trilhas')
 	
 
-class Pacote(models.Model):
-	nome_pacote = models.CharField(max_length=25)
-	atividades = models.ManyToManyField('Atividade')
-	valor_total = models.FloatField(null=True)
+class Pacote(Inscrevivel):
+	pacote = models.ManyToManyField('Pacote',related_name='meus_pacotes')
+	#atividades = models.ManyToManyField('Atividade')
+	#nome_pacote = models.CharField(max_length=25)	
+	#valor_total = models.FloatField(null=True)
