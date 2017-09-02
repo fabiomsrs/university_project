@@ -32,19 +32,8 @@ class TipoAtividade(Enum):
 class Inscrevivel(models.Model):
 	nome = models.CharField(max_length=25)	
 	valor = models.FloatField(default=0)	
-	usuario_criador = models.ForeignKey('auth.User',default='')
-	atividades_proibidas = models.ManyToManyField('Atividade')
+	usuario_criador = models.ForeignKey('auth.User',default='')	
 
-	def set_atividades_proibidas(self):
-		for atividade in Atividade.objects.all():
-			if self.horario_inicio >= atividade.horario_inicio and self.horario_final <= atividade.horario_fim and self.local == atividade.local:				
-				self.atividades_proibidas.add(atividade)							
-
-	def checar_concomitancia(self, atividade):		
-		if atividade in self.atividades_proibidas.all():
-			return False 
-		else:
-			return True
 
 	class Meta:
 		abstract = True
@@ -58,6 +47,18 @@ class Atividade(Inscrevivel):
 	horario_final = models.DateField(null=True)
 	ispadrao = models.BooleanField()
 	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
+	atividades_proibidas = models.ManyToManyField('Atividade')
+
+	def set_atividades_proibidas(self):
+		for atividade in Atividade.objects.all():
+			if self.horario_inicio >= atividade.horario_inicio and self.horario_final <= atividade.horario_fim and self.local == atividade.local:				
+				self.atividades_proibidas.add(atividade)							
+
+	def isconcomitante(self, atividade):		
+		if atividade in self.atividades_proibidas.all():
+			return True 
+		else:
+			return False
 
 	def __str__(self):
 		return self.nome_atividade
@@ -134,15 +135,23 @@ class Responsavel(models.Model):
 		return self.nome_responsavel
 
 
-class Trilha(Inscrevivel):
-	#nome = models.CharField(max_length=25)
-	tema = models.CharField(max_length=25)
-	atividades = models.ManyToManyField('Atividade',related_name='minhas_trilhas')
-	coordenadores = models.ManyToManyField('auth.User',related_name='minhas_trilhas')
-	
-
 class Pacote(Inscrevivel):
-	pacote = models.ManyToManyField('Pacote',related_name='meus_pacotes')
+	atividades = models.ManyToManyField('Atividade')
 	#atividades = models.ManyToManyField('Atividade')
 	#nome_pacote = models.CharField(max_length=25)	
 	#valor_total = models.FloatField(null=True)
+	def add_atividade(self,atividade):		
+		if self.atividades.count() > 0:
+			for a in self.atividades.all():
+				if a.isconcomitante(atividade) is not True:
+					self.atividades.add(atividade)
+		else:
+			self.atividades.add(atividade)
+
+
+class Trilha(Pacote):
+	#nome = models.CharField(max_length=25)
+	tema = models.CharField(max_length=25)	
+	coordenadores = models.ManyToManyField('auth.User',related_name='minhas_trilhas')
+
+
