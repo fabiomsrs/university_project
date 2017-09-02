@@ -57,8 +57,7 @@ class Atividade(Inscrevivel):
 	def isconcomitante(self, atividade):		
 		if atividade in self.atividades_proibidas.all():
 			return True 
-		else:
-			return False
+		return False
 
 	def __str__(self):
 		return self.nome_atividade
@@ -97,8 +96,7 @@ class Evento(models.Model):
 		if self.minhas_inscricoes.count() != 0:
 			inscricoes = self.minhas_inscricoes.get_queryset()
 			return inscricoes.filter(meu_pagamento__pago=True)
-		else:
-			return "nenhuma inscricao paga"
+		return "nenhuma inscricao paga"
 
 	def __str__(self):
 		return self.nome_evento
@@ -113,8 +111,7 @@ class EventoInscrevivel(Evento):
 		if self.evento_ptr.minhas_atividades.count() != 0:
 			for atividade in self.evento_ptr.minhas_atividades.all():
 				self.valor += atividade.valor
-		else:
-			return "nenhuma atividade cadastrada"				
+		return "nenhuma atividade cadastrada"				
 		
 
 
