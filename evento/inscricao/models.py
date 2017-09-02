@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
-from core.models import Evento,EventoInscrevivel,Atividade
 # Create your models here.
 
 class Inscricao(models.Model):	
@@ -71,3 +70,5 @@ class Pagamento(models.Model):
 	def save(self, *args, **kwargs):		
 		self.calcular_valor_total()
 		super(Pagamento, self).save(*args, **kwargs)
+
+from core.models import Evento,EventoInscrevivel,Atividade
