@@ -6,6 +6,7 @@ from enumfields import EnumField
 from enumfields import Enum
 from unittest.util import _MAX_LENGTH
 from .managers import EventoSateliteManager
+from inscricao.models import Inscricao,ItemInscricao
 # Create your models here.
 
 class TipoEvento(Enum):
@@ -29,14 +30,16 @@ class TipoAtividade(Enum):
 
 
 class Inscrevivel(models.Model):
+	nome = models.CharField(max_length=25)	
 	valor = models.FloatField(default=0)	
+	usuario_criador = models.ForeignKey('auth.User',default='')	
+
+
 	class Meta:
 		abstract = True
 
-class Atividade(Inscrevivel):
-	nome_atividade = models.CharField(max_length=25)	
-	descricao = models.TextField(max_length=250)
-	usuario_criador = models.ForeignKey('auth.User',related_name='minhas_atividades',default='')	
+class Atividade(Inscrevivel):	
+	descricao = models.TextField(max_length=250)	
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
 	local = models.ForeignKey('comum.EspacoFisico', related_name='atividades',null=True)
@@ -51,11 +54,11 @@ class Atividade(Inscrevivel):
 			if self.horario_inicio >= atividade.horario_inicio and self.horario_final <= atividade.horario_fim and self.local == atividade.local:				
 				self.atividades_proibidas.add(atividade)							
 
-	def checar_concomitancia(self, atividade):		
+	def isconcomitante(self, atividade):		
 		if atividade in self.atividades_proibidas.all():
-			return False 
+			return True 
 		else:
-			return True
+			return False
 
 	def __str__(self):
 		return self.nome_atividade
@@ -69,6 +72,13 @@ class Evento(models.Model):
 	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)	
 	data_inicio = models.DateField(null=True)	
 	data_de_fim = models.DateField(null=True)	
+
+	def inscrever(self, user, atividades):
+		inscricao = Inscricao.objects.create(usuario=user,evento=self)
+		for atividade in atividades:
+			ItemInscricao.objects.create(inscricao=inscricao,atividade=atividade)
+					
+		return [item.atividade for item in inscricao.meus_itens.all()]
 
 	def set_evento_principal(self, evento):
 		if self.evento_principal == None and evento.evento_principal == None:
@@ -96,8 +106,8 @@ class Evento(models.Model):
 	objects = EventoSateliteManager()
 
 
-class EventoInscrevivel(Evento,Inscrevivel):
-	
+class EventoInscrevivel(Evento):
+	valor = models.FloatField(default=0)
 	def set_valor_total(self):
 		self.valor = 0
 		if self.evento_ptr.minhas_atividades.count() != 0:
@@ -125,14 +135,23 @@ class Responsavel(models.Model):
 		return self.nome_responsavel
 
 
-class Trilha(models.Model):
-	nome = models.CharField(max_length=25)
-	tema = models.CharField(max_length=25)
+class Pacote(Inscrevivel):
 	atividades = models.ManyToManyField('Atividade')
-	coordenadores = models.ManyToManyField('auth.User')
-	
+	#atividades = models.ManyToManyField('Atividade')
+	#nome_pacote = models.CharField(max_length=25)	
+	#valor_total = models.FloatField(null=True)
+	def add_atividade(self,atividade):		
+		if self.atividades.count() > 0:
+			for a in self.atividades.all():
+				if a.isconcomitante(atividade) is not True:
+					self.atividades.add(atividade)
+		else:
+			self.atividades.add(atividade)
 
-class Pacote(models.Model):
-	nome_pacote = models.CharField(max_length=25)
-	atividades = models.ManyToManyField('Atividade')
-	valor_total = models.FloatField(null=True)
+
+class Trilha(Pacote):
+	#nome = models.CharField(max_length=25)
+	tema = models.CharField(max_length=25)	
+	coordenadores = models.ManyToManyField('auth.User',related_name='minhas_trilhas')
+
+
