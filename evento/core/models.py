@@ -43,8 +43,8 @@ class Atividade(Inscrevivel):
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
 	local = models.ForeignKey('comum.EspacoFisico', related_name='atividades',null=True)
-	horario_inicio = models.DateField(null=True)
-	horario_final = models.DateField(null=True)
+	horario_inicio = models.DateTimeField(null=True)
+	horario_final = models.DateTimeField(null=True)
 	ispadrao = models.BooleanField()
 	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
 	atividades_proibidas = models.ManyToManyField('Atividade')
@@ -70,8 +70,8 @@ class Evento(models.Model):
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
 	tipo_evento = EnumField(TipoEvento,max_length=25,default = '')
 	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)	
-	data_inicio = models.DateField(null=True)	
-	data_de_fim = models.DateField(null=True)	
+	data_inicio = models.DateTimeField(null=True)	
+	data_de_fim = models.DateTimeField(null=True)	
 
 	def inscrever(self, user, atividades):
 		inscricao = Inscricao.objects.create(usuario=user,evento=self)
