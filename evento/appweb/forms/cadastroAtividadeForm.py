@@ -12,7 +12,7 @@ class AtividadeForm(forms.ModelForm):
 
 	class Meta:
 		model = Atividade
-		exclude = ['usuario_criador','responsavel','horario_inicio','horario_final','atividades_proibidas','local']		
+		exclude = ['usuario_criador', 'horario_inicio','horario_final','atividades_proibidas','local']		
 		fields = '__all__'
 
 
