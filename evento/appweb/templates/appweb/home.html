@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!--<script src="{% static 'jquery.js' %}"></script>-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.js"></script>
+	<script src="{% static 'cssPersonalizado/js/jquery.js' %}"></script>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.js"></script>-->
 	<script type="text/javascript" src="{% static 'cssMaterialize/js/materialize.js'%}"></script>
 	<script type="text/javascript" src="{% static 'cssMaterialize/js/materialize.min.js'%}"></script>
 	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/materialize.css'%}">
@@ -29,18 +29,21 @@
 
 	<div class="conteiner">
 		<div class="row">
+
 	        <div class="col s4 m3 offset-s4">
 	          <div class="card">
+
 	            <div class="card-image">
-	              <img src="{%static 'cssPersonalizado/imagens/eventos1.png'%}">          
+   	              	<img src="{%static 'cssPersonalizado/imagens/eventos1.png'%}">          
 	            </div>
+
 	            <div class="card-content">
 	              <span class="card-title ">Eventos</span>
 	              <p>Nesse espaço você pode gerenciar seus eventos.</p>
 	            </div>
+	            
 	            <div class="card-action">
-	              <a class="dropdown-button btn" data-beloworigin="true" href="#!" data-activates="dropdown1">Gerenciar Eventos<i class="material-icons right">arrow_drop_down</i></a>
-
+	              <a class="dropdown-button btn"  href="#!" data-activates="dropdown1	">Gerenciar Eventos<i class="material-icons right">arrow_drop_down</i></a>
 	              			<!-- Dropdown Structure -->
 					<ul id="dropdown1" class="dropdown-content">
 					  <li><a href="{% url 'evento:cadastro_evento' %}">Cadastrar Evento</a></li>
@@ -48,42 +51,50 @@
 					  <li><a href="{% url 'cupom:cadastro_cupom' %}">Cadastrar Cupom</a></li>
 					  <li><a href="{% url 'evento:associar_evento' %}">Associar Evento</a></li>
 					  <li><a href="{% url 'tag:tag_evento' %}">Adicionar Tag Evento</a></li>
-					  <li><a href="#!">Listar Eventos</a></li>
 					
 					  
 					</ul>
 	            </div>
 	          </div>
 	        </div>
-	        <div class="col s6 m3 offset-s6">
+	        <div class="col s4 m3 offset-s4">
 	          <div class="card">
+
 	            <div class="card-image">
 	              <img src="{%static 'cssPersonalizado/imagens/usuario.png'%}">          
 	            </div>
+
 	            <div class="card-content">
 	              <span class="card-title ">Usuário</span>
 	              <p>Nesse espaço você pode gerenciar suas ações.</p>
 	            </div>
+	            
 	            <div class="card-action">
-	              <a class="dropdown-button btn" data-beloworigin="true" href="#!" data-activates="dropdown2">Gerenciar Eventos<i class="material-icons right">arrow_drop_down</i></a>
+	              <a class="dropdown-button btn"  href="#!" data-activates="dropdown2">Gerenciar Eventos<i class="material-icons right">arrow_drop_down</i></a>
 	              			<!-- Dropdown Structure -->
 					<ul id="dropdown2" class="dropdown-content">
 					  <li><a href="{% url 'inscricao:inscricao' %}">Inscrever-se</a></li>
 					  <li><a href="{% url 'tag:tag_usuario' %}">Adicionar Tag Usr</a></li>
 					  <li><a href="{% url 'evento:criar_equipe' %}">Criar Equipe</a></li>
-					  <li><a href="#!">Meus Eventos</a></li>					
+
 					  
 					</ul>
 	            </div>
 	          </div>
 	        </div>
-	      </div>
-		
-	</div>
+	    </div>
 	{%endblock%}
 
 
 </body>
+
+      <footer class="page-footer">
+	          <div class="footer-copyright">
+	            <div class="container">
+	            © 2017 Equipe Saturday Copyright
+	            </div>
+	          </div>
+      </footer>
 </html>
 
 
