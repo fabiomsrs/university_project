@@ -2,45 +2,9 @@
 {%load bootstrap%}
 
 {%block content%}
-		{%block js%}
-			<script language="javascript">								
-				$(document).ready(function(){	
-				    $("#id_evento").change(function(){populateAtividade()});});			       	    	
-				    	eventos = {{ eventos | safe}};
-				        atividades_por_evento = {{atividades_por_evento | safe}};				       					        
-				       	populateEventos();
-						$("#id_atividade").empty();						
-
-						function populateEventos(){				       		
-				       		$("#id_evento").empty();							
-							$.each(eventos, function(v){
-								$("#id_evento").append($("<option></option>")
-									.attr("value", eventos[v])
-									.text(eventos[v]));
-							});
-				       	}		
-
-				       	function populateAtividade(){								       		
-							evento = $("#id_evento option:selected").text();
-							$("#id_atividade").empty();
-							for (let [e, eatividades] of Object.entries(atividades_por_evento)){								
-								if(e == evento){	
-									cont = 0																		
-									for(atividade in eatividades){				
-													cont=cont+1;															
-													$("#id_atividade")
-														.append($("<li><label for='id_atividade_"+ cont +"'> <input type='checkbox' name='atividade' id='id_atividade_"+cont+"' value ='"+cont+"'/> "+eatividades[atividade]+" </label></li>"));														
-									}							
-								}
-							}
-				       	}
-				       									
-			</script>
-		{%endblock%}
 		<form method="POST">{% csrf_token %}
 			<div class="col-sm-12">	       
 	        	{{form|bootstrap}}     	
-
 	        <button type="submit" name="go" class="btn btn-success btn-md btn-block">INSCREVER-SE</button>
 	        </div>	            
        </form>

@@ -5,6 +5,7 @@ from django.core.validators import MaxValueValidator
 class Inscricao(models.Model):	
 	usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='minhas_inscricoes')	
 	evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE, related_name='minhas_inscricoes')
+	atividades = models.ManyToManyField('core.Atividade')
 	cupom = models.OneToOneField('Cupom',related_name='minha_inscricao',null=True)
 	#inscricao = models.OneToOneField('inscricao.Inscricao',related_name='meu_pagamento',default='')	
 	#atividade = models.ManyToManyField('evento.Atividade', through='RelacionamentoAtividadeInscricao')
@@ -18,11 +19,6 @@ class Inscricao(models.Model):
 			if self.evento == inscricao.evento and self.usuario == inscricao.usuario:
 				raise Exception('Inscricao ja existe')			
 		super(Inscricao, self).save(*args, **kwargs)
-
-class ItemInscricao(models.Model):
-	inscricao = models.ForeignKey('Inscricao', on_delete=models.CASCADE, related_name='meus_itens')
-	atividade = models.ForeignKey('core.Atividade')
-
 
 class Cupom(models.Model):
 	nome_cupom = models.CharField(max_length=25)
