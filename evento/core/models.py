@@ -6,7 +6,7 @@ from enumfields import EnumField
 from enumfields import Enum
 from unittest.util import _MAX_LENGTH
 from .managers import EventoSateliteManager
-from inscricao.models import Inscricao,ItemInscricao
+from inscricao.models import Inscricao
 # Create your models here.
 
 class TipoEvento(Enum):
@@ -43,8 +43,8 @@ class Atividade(Inscrevivel):
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
 	tipo_atividade = EnumField(TipoAtividade,max_length=25,default=TipoAtividade.DEFAULT)
 	local = models.ForeignKey('comum.EspacoFisico', related_name='atividades',null=True)
-	horario_inicio = models.DateTimeField(null=True)
-	horario_final = models.DateTimeField(null=True)
+	horario_inicio = models.DateField(null=True)
+	horario_final = models.DateField(null=True)
 	ispadrao = models.BooleanField()
 	responsavel = models.ForeignKey('Responsavel', related_name='minhas_atividades', default = '')
 	atividades_proibidas = models.ManyToManyField('Atividade')
@@ -75,9 +75,9 @@ class Evento(models.Model):
 	def inscrever(self, user, atividades):
 		inscricao = Inscricao.objects.create(usuario=user,evento=self)
 		for atividade in atividades:
-			ItemInscricao.objects.create(inscricao=inscricao,atividade=atividade)
+			inscricao.atividades.add(atividade)
 					
-		return [item.atividade for item in inscricao.meus_itens.all()]
+		return inscricao.atividades.get_queryset()
 
 	def set_evento_principal(self, evento):
 		if self.evento_principal == None and evento.evento_principal == None:
@@ -121,7 +121,7 @@ class Agenda(models.Model):
 
 class CheckIn(models.Model):
 	organizador = models.CharField(max_length=45)
-	inscricao = models.ForeignKey('inscricao.ItemInscricao',null=True)
+	#inscricao = models.ForeignKey('inscricao',null=True)
 
 
 class Responsavel(models.Model):

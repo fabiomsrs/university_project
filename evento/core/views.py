@@ -34,16 +34,25 @@ class CadastroAtividade(View):
 				atividade.save()
 				return redirect('evento:evento', pk=self.kwargs["pk"])
 
+
 class MeusEventos(View):
-	def get(self, request, *args, **kwargs):
-		user = request.user
+	def get(self, request, *args, **kwargs):		
 		eventos = user.meus_eventos.all()
 		return render(request, 'appweb/meusEventos.html', {'eventos':eventos})
+
+
+class Inscrever(View):
+	def get(self, request, *args, **kwargs):				
+		user = request.user
+		eventos = Evento.objects.all().exclude(membros=user)
+		return render(request, 'appweb/eventos.html', {'eventos':eventos})
+
 
 class EventoEspecifico(View):	
 	def get(self, request, *args, **kwargs):
 		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])
 		return render(request, 'appweb/eventoHome.html', {'evento':evento})
+
 
 class CadastroEvento(View):
 	form = EventoForm
@@ -73,6 +82,7 @@ class AssociarEvento(View):
 		context = {'form_evento_principal':form_evento_principal, 'eventos':eventos, 'evento':evento}
 		return render(request, 'appweb/associarEvento.html', context)
 		
+
 class CriarEquipe(View):
 	form = EquipeForm
 		
