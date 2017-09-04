@@ -1,0 +1,10 @@
+{% extends './base.html' %}
+{% block content%}
+		<!-- Dropdown Structure -->		
+	<ul>
+	  <li><a href="{% url 'evento:cadastro_atividade' pk=evento.pk %}">Adicionar Atividade</a></li>
+	  <li><a href="{% url 'cupom:cadastro_cupom' pk=evento.pk %}">Cadastrar Cupom</a></li>
+	  <li><a href="{% url 'evento:associar_evento' pk=evento.pk %}">Associar Evento</a></li>
+	  <li><a href="{% url 'tag:tag_evento' pk=evento.pk %}">Adicionar Tag Evento</a></li>
+	</ul>
+{%endblock%}

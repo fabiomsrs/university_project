@@ -1,32 +1,6 @@
+{% extends './base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-	<script src="{% static 'cssPersonalizado/js/jquery.js' %}"></script>
-	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.js"></script>-->
-	<script type="text/javascript" src="{% static 'cssMaterialize/js/materialize.js'%}"></script>
-	<script type="text/javascript" src="{% static 'cssMaterialize/js/materialize.min.js'%}"></script>
-	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/materialize.css'%}">
-	<link rel="stylesheet" type="text/css" href="{% static 'cssMaterialize/css/materialize.min.css'%}">
-	<link rel="stylesheet" type="text/css" href="{% static 'cssPersonalizado/css/base.css'%}">
-	<script type="text/javascript" src="{% static 'cssPersonalizado/js/jsPersonalizado.js' %}"></script>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	
-	<title>Home</title>
-</head>
-<header>
-	<nav>
-	    <div class="nav-wrapper">
-	      <a href="{% url 'home'%}" class="brand-logo">Saturday'S Events</a>
-	      <a href="{% url 'logout' %}" class="material-icons right">exit_to_app</a>
-	    </div>
-  	</nav>
-</header>
-<body>
-
-	{% block content%}
-
-
+{% block content%}
 	<div class="conteiner">
 		<div class="row">
 
@@ -47,10 +21,7 @@
 	              			<!-- Dropdown Structure -->
 					<ul id="dropdown1" class="dropdown-content">
 					  <li><a href="{% url 'evento:cadastro_evento' %}">Cadastrar Evento</a></li>
-					  <li><a href="{% url 'evento:cadastro_atividade' %}">Adicionar Atividade</a></li>
-					  <li><a href="{% url 'cupom:cadastro_cupom' %}">Cadastrar Cupom</a></li>
-					  <li><a href="{% url 'evento:associar_evento' %}">Associar Evento</a></li>
-					  <li><a href="{% url 'tag:tag_evento' %}">Adicionar Tag Evento</a></li>
+					  <li><a href="{% url 'evento:lista_eventos' %}">Meus Evento</a></li>
 					
 					  
 					</ul>
@@ -73,7 +44,7 @@
 	              <a class="dropdown-button btn"  href="#!" data-activates="dropdown2">Gerenciar Ações<i class="material-icons right">arrow_drop_down</i></a>
 	              			<!-- Dropdown Structure -->
 					<ul id="dropdown2" class="dropdown-content">
-					  <li><a href="{% url 'inscricao:inscricao' %}">Inscrever-se</a></li>
+					  <li><a href="{% url 'evento:lista_outros_eventos' %}">Inscrever-se</a></li>
 					  <li><a href="{% url 'tag:tag_usuario' %}">Adicionar tag de preferencias</a></li>
 					  <li><a href="{% url 'evento:criar_equipe' %}">Criar Equipe</a></li>
 
@@ -83,77 +54,4 @@
 	          </div>
 	        </div>
 	    </div>
-	{%endblock%}
-
-
-</body>
-
-      <footer class="page-footer">
-	          <div class="footer-copyright">
-	            <div class="container">
-	            © 2017 Equipe Saturday Copyright
-	            </div>
-	          </div>
-      </footer>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-
-<a href="{% url 'evento:cadastro_evento' %}" class="top-menu">criar evento</a><br/>
-<a href="{% url 'evento:cadastro_atividade' %}" class="top-menu">adicionar atividade aos meus eventos</a><br/>
-<a href="{% url 'tag:tag_usuario' %}" class="top-menu">adicionar tags a mim</a><br/>
-<a href="{% url 'tag:tag_evento' %}" class="top-menu">adicionar tags aos meus eventos</a><br/>
-<a href="{% url 'cupom:cadastro_cupom' %}" class="top-menu">adicionar cupons aos meus eventos</a><br/>
-<a href="{% url 'evento:associar_evento' %}" class="top-menu">associar evento</a><br/>
-<a href="{% url 'inscricao:inscricao' %}" class="top-menu">inscrever-se</a><br/>
-<a href="{% url 'evento:criar_equipe' %}" class="top-menu">criar_equipe</a><br/>
-<a href="{% url 'logout' %}" class="top-menu">sair</a>
--->
+{%endblock%}

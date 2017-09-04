@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [	
 	url(r'^tagUsuario/$',views.adicionarTagUsuario.as_view(), name='tag_usuario'),
-	url(r'^tagEvento/$',views.adicionarTagEvento.as_view(), name='tag_evento'),
+	url(r'^(?P<pk>\d+)/tagEvento/$',views.adicionarTagEvento.as_view(), name='tag_evento'),
 ]
