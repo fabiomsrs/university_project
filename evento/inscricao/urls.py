@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [
 	url(r'^cadastrarInscricao/$',views.Inscricao.as_view(), name='inscricao'),
-	url(r'^cadastroCupom/$',views.CadastroCupom.as_view(), name='cadastro_cupom'),	
+	url(r'^(?P<pk>\d+)/cadastroCupom/$',views.CadastroCupom.as_view(), name='cadastro_cupom'),	
 ]

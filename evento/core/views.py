@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect, render_to_response
+from django.shortcuts import render,redirect, render_to_response,get_object_or_404
 from django.views import View
 from appweb.forms.cadastroUsuarioForm import UsuarioForm
 from appweb.forms.cadastroEventoForm import EventoForm
@@ -10,32 +10,46 @@ from appweb.forms.associarEventoForm import FormEventoPrincipal
 from core.models import Evento
 from django.template.context_processors import request
 
-class CadastroAtividade(View):
+
+class CadastroAtividade(View):	
 	atividade_form = AtividadeForm
 	responsavel_form = ResponsavelForm
-	def get(self, request, *args, **kwargs):
-		atividade_form = self.atividade_form(user=self.request.user)
+	def get(self, request, *args, **kwargs):		
+		atividade_form = self.atividade_form()
 		responsavel_form = self.responsavel_form()
 		context = { 'atividade_form': atividade_form, 'responsavel_form' : responsavel_form}
 		return render(request, 'appweb/atividadeForm.html', context)
 
 	def post(self, request, *args, **kwargs):		
-		atividade_form = self.atividade_form(request.POST, user=self.request.user)
+		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])		
+		atividade_form = self.atividade_form(request.POST)
 		responsavel_form = self.responsavel_form(request.POST)		
 		if atividade_form.is_valid():
 			if responsavel_form.is_valid():
 				atividade = atividade_form.save(commit = False)
-				responsavel = responsavel_form.save()
-				atividade.responsavel = responsavel 	
+				responsavel = responsavel_form.save()				
+				atividade.responsavel = responsavel 
+				atividade.evento = evento	
 				atividade.usuario_criador = self.request.user							
 				atividade.save()
-				return redirect('home')
+				return redirect('evento:evento', pk=self.kwargs["pk"])
 
+class MeusEventos(View):
+	def get(self, request, *args, **kwargs):
+		user = request.user
+		eventos = user.meus_eventos.all()
+		return render(request, 'appweb/meusEventos.html', {'eventos':eventos})
+
+class EventoEspecifico(View):	
+	def get(self, request, *args, **kwargs):
+		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])
+		return render(request, 'appweb/eventoHome.html', {'evento':evento})
 
 class CadastroEvento(View):
 	form = EventoForm
-	def post(self, request, *args, **kwargs):	
+	def post(self, request, *args, **kwargs):		
 		form = self.form(request.POST)
+		print(form.errors)
 		if form.is_valid():
 			evento = form.save() 					
 			evento.membros.add(request.user)			
@@ -45,20 +59,18 @@ class CadastroEvento(View):
 		return render(request, 'appweb/form.html', {'form': form})
 
 
-class AssociarEvento(View):
+class AssociarEvento(View):	
 	form_evento_principal = FormEventoPrincipal	
-	def post(self,request, *args, **kwargs):						
-		for evento in Evento.objects.all():
-			if evento.nome_evento == request.POST['evento_satelite']:				
-				evento.set_evento_principal(Evento.objects.get(pk=int(request.POST['evento_principal'])))
-				evento.save()
-		return redirect('home')					
+	def post(self,request, *args, **kwargs):	
+		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])													
+		evento.save()
+		return redirect('evento:evento', pk=self.kwargs["pk"])					
 
 	def get(self, request, *args, **kwargs):
-		evento_satelite = [str(evento) for evento in self.request.user.meus_eventos.all()]
-		eventos = Evento.objects.all()
+		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])
+		eventos = Evento.objects.all().exclude(pk=evento.pk)
 		form_evento_principal = self.form_evento_principal(eventos=eventos)		
-		context = {'form_evento_principal':form_evento_principal, 'eventos':eventos, 'evento_satelite':evento_satelite}
+		context = {'form_evento_principal':form_evento_principal, 'eventos':eventos, 'evento':evento}
 		return render(request, 'appweb/associarEvento.html', context)
 		
 class CriarEquipe(View):

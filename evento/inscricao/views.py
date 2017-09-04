@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
 from appweb.forms.inscricaoForm import InscricaoForm
 from appweb.forms.cadastroCupomForm import CupomForm
@@ -43,9 +43,11 @@ class CadastroCupom(View):
 		form = self.form(user=self.request.user)
 		return render(request, 'appweb/cadastroCupom.html', {'form': form})
 
-	def post(self, request, *args, **kwargs):			
+	def post(self, request, *args, **kwargs):	
+		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])		
 		form = self.form(request.POST, user=self.request.user)		
 		if form.is_valid():
-			cupom = form.save(commit = False) 								
+			cupom = form.save(commit = False)
+			cupom.evento = evento 								
 			cupom.save()
-			return redirect('home')	
+			return redirect('evento:evento', pk=self.kwargs["pk"])	

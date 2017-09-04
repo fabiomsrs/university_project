@@ -13,7 +13,7 @@ class TipoEvento(Enum):
 	CONGRESSO = 'congresso'
 	SIMPOSIO = 'simposio'
 	SEMANAS =  'semanas'	
-	OUTROS = ''
+	DEFAULT = 'outros'
 
 	
 class StatusEvento(Enum):
@@ -26,7 +26,7 @@ class TipoAtividade(Enum):
 	SEMINARIO = 'seminario'
 	PALESTRA = 'palestra'
 	SIMPOSIO = 'simposio'
-	DEFAULT = ''
+	DEFAULT = 'outros'
 
 
 class Inscrevivel(models.Model):
@@ -67,10 +67,10 @@ class Evento(models.Model):
 	nome_evento = models.CharField(max_length=25)	
 	membros = models.ManyToManyField('auth.User',related_name='meus_eventos')
 	status = EnumField(StatusEvento,max_length=25,default=StatusEvento.NOVO)
-	tipo_evento = EnumField(TipoEvento,max_length=25,default = '')
+	tipo_evento = EnumField(TipoEvento,max_length=25,default = TipoEvento.DEFAULT)
 	evento_principal = models.ForeignKey('Evento', related_name = 'meus_eventos_satelites',null=True)	
-	data_inicio = models.DateTimeField(null=True)	
-	data_de_fim = models.DateTimeField(null=True)	
+	data_inicio = models.DateField(null=True)	
+	data_de_fim = models.DateField(null=True)	
 
 	def inscrever(self, user, atividades):
 		inscricao = Inscricao.objects.create(usuario=user,evento=self)
