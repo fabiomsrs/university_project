@@ -1,3 +1,4 @@
+
 # EventosApp
 Projeto com o objetivo de criar uma plataforma online de eventos, onde pessoas podem publicar seus eventos para que outras pessoas possam participar. Didaticamente o projeto visa colocar em prática a construção de um design de classes coeso e claro, tal como a aplicação de testes de unidade, padrões de projetos e avaliar o trabalho de equipe.
 
@@ -27,3 +28,4 @@ cd Eventosapp
 Vá no arquivo (/evento/config/settings.py) e configure seu banco de dados no campo DATABASES.
 Execute o prompt de comando e vá até o diretorio (Eventosapp/evento) e execute o comando **manage.py migrate**.
 Em apos as migrações estiverem completas execute o comando **manage.py runserver**. Vá até a seguinte linha **Starting development server at http://127.0.0.1:8000/** e copie a url e cole no seu navegador.
+
