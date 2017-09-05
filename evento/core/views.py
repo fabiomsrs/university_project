@@ -37,7 +37,7 @@ class CadastroAtividade(View):
 
 class MeusEventos(View):
 	def get(self, request, *args, **kwargs):		
-		eventos = user.meus_eventos.all()
+		eventos = request.user.meus_eventos.all()
 		return render(request, 'appweb/meusEventos.html', {'eventos':eventos})
 
 
