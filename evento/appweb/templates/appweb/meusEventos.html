@@ -16,7 +16,10 @@
       </div>
     </li>
   </ul>
- {% empty %}
-    Empty list eventos
+{% empty %}
+<ul class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">event_available</i>Empty list eventos</div>
+    
 {% endfor %}
 {%endblock%}
