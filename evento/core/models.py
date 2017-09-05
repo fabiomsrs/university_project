@@ -60,7 +60,7 @@ class Atividade(Inscrevivel):
 		return False
 
 	def __str__(self):
-		return self.nome_atividade
+		return self.nome
 
 	
 class Evento(models.Model):
@@ -106,6 +106,13 @@ class Evento(models.Model):
 
 class EventoInscrevivel(Evento):
 	valor = models.FloatField(default=0)
+
+	def inscrever(self, user):
+		inscricao = Inscricao.objects.create(usuario=user,evento=self)
+		for atividade in Atividade.objects.filter(evento=self):
+			inscricao.atividades.add(atividade)
+					
+		return inscricao.atividades.get_queryset()
 	def set_valor_total(self):
 		self.valor = 0
 		if self.evento_ptr.minhas_atividades.count() != 0:
