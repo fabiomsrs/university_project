@@ -1,11 +1,11 @@
 {% extends './baseMaterialize.html' %}
 {% block content%}
 {%for evento in eventos%}
- <div class="col s4 offset-s2">
+<div class="col s4 offset-s2">
 <div class="card">
  <div class="card-content">
  <a href="{% url 'inscricao:inscricao' pk=evento.pk %}"><span class="card-title ">Evento: {{evento}}</span></a>
-</div>	            
+</div>              
 </div>
 </div>
 {% empty %}
