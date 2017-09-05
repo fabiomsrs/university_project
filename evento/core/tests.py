@@ -83,7 +83,7 @@ class EventoTest(TestCase):
 		atividade1.save()
 		evento.set_todas_atividades()
 		atividades = [atividade0,atividade1]
-		self.assertEqual(evento.inscrever(user,atividades), atividades)
+		self.assertEqual(evento.inscrever(user,atividades).count(), 2)
 
 class AtividadeTest(TestCase):
 	def set_atividades_proibidas(self):

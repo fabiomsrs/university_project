@@ -1,40 +1,14 @@
 {% extends './base.html' %}
 {%load bootstrap%}
 	{%block content%}
-	{%block js%}
-			<script language="javascript">		
-				$(document).ready(function(){	
-				    $("#id_evento_principal").change(function(){populateEventoSatelite()});});			       	  	    	    			       					    
-				       	function populateEventoSatelite(){						       		
-				       		evento_satelite = {{ evento_satelite | safe}};
-							evento = $("#id_evento_principal option:selected").text();							
-							$("#id_evento_satelite").empty();
-							for (let e of evento_satelite){																
-								if(e != evento){																
-									$("#id_evento_satelite")
-										.append($("<option></option>")
-		                                .attr("value", e)
-	    	                			.text(e));
-								}
-							}
-				       	}
-				       									
-			</script>
-		{%endblock%}
 		<nav class="barra">
 			<div class="nome">
 				<h2>Associar Evento</h2>
-			</div>
-			
+			</div>			
 		</nav>
-
-
-
 		<form method="POST">{% csrf_token %}
 			<div class="col-sm-12">
-	        {{form_evento_principal|bootstrap}}	
-	            	        	       
-
+	        {{form_evento_principal|bootstrap}}		            	        	      
 	        <button type="submit" name="go" class="btn btn-success btn-md btn-block">SALVAR</button>
 	        </div>	            
        </form>
