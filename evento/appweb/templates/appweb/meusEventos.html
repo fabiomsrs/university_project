@@ -1,14 +1,17 @@
-{% extends './base.html' %}
+{% extends './baseMaterialize.html' %}
+{% load static %}
 {% block content%}
+<body>
 {%for evento in eventos%}
- <div class="col s4 offset-s2">
-<div class="card">
- <div class="card-content">
- <a href="{% url 'evento:evento' pk=evento.pk %}"><span class="card-title ">Evento: {{evento}}</span></a>
-</div>	            
-</div>
+<div class="col s4 offset-s2">
+	<div class="card">
+ 		<div class="card-content">
+ 			<a href="{% url 'evento:evento' pk=evento.pk %}"><span class="card-title ">Evento: {{evento}}</span></a>
+		</div>	            
+	</div>
 </div>
 {% empty %}
     Empty list eventos
 {% endfor %}
+</body>
 {%endblock%}
