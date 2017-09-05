@@ -32,7 +32,7 @@ class CadastroAtividade(View):
 				atividade.evento = evento	
 				atividade.usuario_criador = self.request.user							
 				atividade.save()
-				return redirect('evento:evento', pk=self.kwargs["pk"])
+				return redirect('evento:lista_eventos')
 
 
 class MeusEventos(View):
@@ -66,8 +66,8 @@ class CadastroEvento(View):
 			else:	
 				evento = form.save() 					
 				evento.membros.add(request.user)			
-
 			return redirect('home')			
+			
 	def get(self, request, *args, **kwargs):
 		form = self.form()
 		return render(request, 'appweb/form.html', {'form': form})
@@ -78,7 +78,7 @@ class AssociarEvento(View):
 	def post(self,request, *args, **kwargs):	
 		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])													
 		evento.save()
-		return redirect('evento:evento', pk=self.kwargs["pk"])					
+		return redirect('evento:lista_eventos')				
 
 	def get(self, request, *args, **kwargs):
 		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])

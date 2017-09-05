@@ -19,7 +19,8 @@ class Inscrever(View):
 				atividade = Atividade.objects.get(pk=int(atividade))				
 				inscricao.atividades.add(atividade)
 			Pagamento(inscricao=inscricao).save()
-			return redirect('evento:evento', pk=self.kwargs["pk"])				
+			return redirect('evento:lista_outros_eventos')
+							
 	def get(self, request, *args, **kwargs):
 		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])		
 		form = self.form(atividades=Atividade.objects.filter(evento=evento))													
