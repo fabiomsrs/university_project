@@ -14,9 +14,9 @@
       <div class="collapsible-body">
       	  <div class="collection">
 		    <a href="{% url 'inscricao:inscricao' pk=evento.pk %}" class="collection-item">Inscrever-se nas Atividades</a>
-{% empty %}
-<ul class="collapsible" data-collapsible="accordion">
     <li>
+<ul/>    
+{% empty %}
       <div class="collapsible-header"><i class="material-icons">event_available</i>Não existe novos eventos</div>
     
 {% endfor %}
