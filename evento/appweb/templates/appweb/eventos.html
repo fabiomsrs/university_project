@@ -1,23 +1,24 @@
 {% extends './baseMaterialize.html' %}
 {% block content%}
 {%for evento in eventos%}
-<!--<div class="col s4 offset-s2">
-<div class="card">
- <div class="card-content">
- <a href="{% url 'inscricao:inscricao' pk=evento.pk %}"><span class="card-title ">Evento: {{evento}}</span></a>
-</div>              
-</div>
-</div>-->
-<ul class="collapsible" data-collapsible="accordion">
+
+  <ul class="collapsible" data-collapsible="accordion">
     <li>
       <div class="collapsible-header"><i class="material-icons">event_available</i>Evento: {{evento}}</div>
       <div class="collapsible-body">
       	  <div class="collection">
-		    <a href="{% url 'inscricao:inscricao' pk=evento.pk %}" class="collection-item">Inscrever-se nas Atividades</a>
+		    <a href="{% url 'inscricao:inscricao' pk=evento.pk %}" class="collection-item">Inscrever-se nas Atividades</a>  
+  			</div>
+      </div>
+
+    </li>
+  </ul>
 {% empty %}
 <ul class="collapsible" data-collapsible="accordion">
     <li>
-      <div class="collapsible-header"><i class="material-icons">event_available</i>Não existe novos eventos</div>
+      <div class="collapsible-header"><i class="material-icons">event_available</i>Empty list eventos</div>
+      </li>
+    </ul>
     
 {% endfor %}
 {%endblock%}
