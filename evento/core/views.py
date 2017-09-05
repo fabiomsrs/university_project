@@ -59,7 +59,7 @@ class CadastroEvento(View):
 	def post(self, request, *args, **kwargs):		
 		form = self.form(request.POST)		
 		if form.is_valid():
-			if request.POST['inscricao_direta']:			
+			if request.POST.get('inscricao_direta',False):			
 				evento = EventoInscrevivel(nome_evento=request.POST['nome_evento'],status=request.POST['status'],tipo_evento=request.POST['tipo_evento'])			
 				evento.save()
 				evento.membros.add(request.user)			
