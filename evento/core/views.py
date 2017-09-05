@@ -7,7 +7,7 @@ from appweb.forms.criarEquipeForm import EquipeForm
 from django.template.context import RequestContext
 from appweb.forms.cadastroAtividadeForm import AtividadeForm,ResponsavelForm
 from appweb.forms.associarEventoForm import FormEventoPrincipal
-from core.models import Evento
+from core.models import Evento,EventoInscrevivel
 from django.template.context_processors import request
 
 
@@ -37,7 +37,7 @@ class CadastroAtividade(View):
 
 class MeusEventos(View):
 	def get(self, request, *args, **kwargs):		
-		eventos = user.meus_eventos.all()
+		eventos = request.user.meus_eventos.all()
 		return render(request, 'appweb/meusEventos.html', {'eventos':eventos})
 
 
@@ -57,11 +57,16 @@ class EventoEspecifico(View):
 class CadastroEvento(View):
 	form = EventoForm
 	def post(self, request, *args, **kwargs):		
-		form = self.form(request.POST)
-		print(form.errors)
+		form = self.form(request.POST)		
 		if form.is_valid():
-			evento = form.save() 					
-			evento.membros.add(request.user)			
+			if request.POST['inscricao_direta']:			
+				evento = EventoInscrevivel(nome_evento=request.POST['nome_evento'],status=request.POST['status'],tipo_evento=request.POST['tipo_evento'])			
+				evento.save()
+				evento.membros.add(request.user)			
+			else:	
+				evento = form.save() 					
+				evento.membros.add(request.user)			
+
 			return redirect('home')			
 	def get(self, request, *args, **kwargs):
 		form = self.form()

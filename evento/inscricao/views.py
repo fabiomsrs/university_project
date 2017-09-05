@@ -3,24 +3,23 @@ from django.views import View
 from appweb.forms.inscricaoForm import InscricaoForm
 from appweb.forms.cadastroCupomForm import CupomForm
 from core.models import Evento,Atividade
-from inscricao.models import Cupom,Pagamento
+from inscricao.models import Cupom,Pagamento,Inscricao
 
 # Create your views here.
-class Inscricao(View):
+class Inscrever(View):
 	form = InscricaoForm
 
 	def post(self, request, *args, **kwargs):		
-		form = self.form(request.POST, atividades=Atividade.objects.all())
-		print(form.errors,"\n\n",request.POST,"\n\n")						
+		form = self.form(data=request.POST, atividades=Atividade.objects.all())											
+		evento = evento = get_object_or_404(Evento, pk=self.kwargs["pk"])														
 		if form.is_valid():
-			inscricao = form.save(commit = False)
-			inscricao.usuario = request.user
-			inscricao.save()
-			for atividade in request.POST['atividade']:				
+			inscricao = Inscricao(usuario=request.user,evento=evento)	
+			inscricao.save()	
+			for atividade in request.POST.getlist('atividades'):
+				atividade = Atividade.objects.get(pk=int(atividade))				
 				inscricao.atividades.add(atividade)
 			Pagamento(inscricao=inscricao).save()
-			return redirect('home')
-
+			return redirect('evento:evento', pk=self.kwargs["pk"])				
 	def get(self, request, *args, **kwargs):
 		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])		
 		form = self.form(atividades=Atividade.objects.filter(evento=evento))													

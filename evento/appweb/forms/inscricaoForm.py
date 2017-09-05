@@ -8,6 +8,10 @@ class InscricaoForm(forms.Form):
 	def __init__(self, *args, **kwargs):
 		self.atividades = kwargs.pop("atividades")
 		super(InscricaoForm, self).__init__(*args, **kwargs)			
-		self.fields["atividades"] = forms.ChoiceField(choices=([(atividade, atividade) for atividade in self.atividades]))
-		self.fields["atividades"].widget = forms.CheckboxSelectMultiple()
+		self.fields["atividades"] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=([(atividade.pk, atividade) for atividade in self.atividades]))
+		#self.fields["atividades"].widget = forms.CheckboxSelectMultiple()
 	
+	class Meta:
+		model = Inscricao
+		exclude = ['usuario','evento','cupom']
+		fields = '__all__'
