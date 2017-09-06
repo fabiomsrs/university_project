@@ -40,13 +40,11 @@ class CupomAutomatico(Cupom):
 		if self.evento in EventoInscrevivel.objects.all():
 			e = EventoInscrevivel.objects.get(pk = self.evento.pk)
 			e.valor = e.valor * (1 - self.desconto/100)
-			e.save()			
-			return e.valor
+			e.save()						
 		else:
 			for atividade in Atividade.objects.filter(evento=self.evento):
 				atividade.valor = atividade.valor * (1 - self.desconto/100)
-				atividade.save()
-			return [atividade.valor for atividade in Atividade.objects.filter(evento=self.evento)]				
+				atividade.save()					
 
 
 class Pagamento(models.Model):	
