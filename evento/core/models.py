@@ -58,6 +58,7 @@ class Atividade(Inscrevivel):
 	def isconcomitante(self, atividade):		
 		if atividade in self.atividades_proibidas.all():
 			return True 
+	
 		return False
 
 	def __str__(self):
@@ -84,8 +85,8 @@ class Evento(models.Model):
 		if self.evento_principal == None and evento.evento_principal == None:
 			self.evento_principal = evento
 			return True
-		else:
-			raise Exception("associcao error")
+		
+		raise Exception("associcao error")
 
 	def set_todas_atividades(self):		
 		if self.meus_eventos_satelites.count != 0:			
@@ -97,6 +98,7 @@ class Evento(models.Model):
 		if self.minhas_inscricoes.count() != 0:
 			inscricoes = self.minhas_inscricoes.get_queryset()
 			return inscricoes.filter(meu_pagamento__pago=True)
+
 		return "nenhuma inscricao paga"
 
 	def __str__(self):
@@ -110,9 +112,10 @@ class EventoInscrevivel(Evento):
 
 	def inscrever(self, user):
 		inscricao = Inscricao.objects.create(usuario=user,evento=self)
+
 		for atividade in Atividade.objects.filter(evento=self):
 			inscricao.atividades.add(atividade)
-					
+
 		return inscricao.atividades.get_queryset()
 		
 	def set_valor_total(self):
@@ -120,6 +123,7 @@ class EventoInscrevivel(Evento):
 		if self.evento_ptr.minhas_atividades.count() != 0:
 			for atividade in self.evento_ptr.minhas_atividades.all():
 				self.valor += atividade.valor
+		
 		return "nenhuma atividade cadastrada"						
 
 
