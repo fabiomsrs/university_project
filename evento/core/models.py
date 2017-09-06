@@ -114,6 +114,7 @@ class EventoInscrevivel(Evento):
 			inscricao.atividades.add(atividade)
 					
 		return inscricao.atividades.get_queryset()
+		
 	def set_valor_total(self):
 		self.valor = 0
 		if self.evento_ptr.minhas_atividades.count() != 0:
