@@ -6,9 +6,7 @@ class Inscricao(models.Model):
 	usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='minhas_inscricoes')	
 	evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE, related_name='minhas_inscricoes')
 	atividades = models.ManyToManyField('core.Atividade')
-	cupom = models.OneToOneField('Cupom',related_name='minha_inscricao',null=True)
-	#inscricao = models.OneToOneField('inscricao.Inscricao',related_name='meu_pagamento',default='')	
-	#atividade = models.ManyToManyField('evento.Atividade', through='RelacionamentoAtividadeInscricao')
+	cupom = models.OneToOneField('Cupom',related_name='minha_inscricao',null=True)	
 
 	def __str__(self):
 		return self.usuario.first_name
@@ -19,6 +17,7 @@ class Inscricao(models.Model):
 			if self.evento == inscricao.evento and self.usuario == inscricao.usuario:
 				raise Exception('Inscricao ja existe')			
 		super(Inscricao, self).save(*args, **kwargs)
+
 
 class Cupom(models.Model):
 	nome_cupom = models.CharField(max_length=25)
@@ -32,6 +31,7 @@ class Cupom(models.Model):
 
 	def __str__(self):
 		return self.nome_cupom,
+
 
 class CupomAutomatico(Cupom):
 	evento = models.OneToOneField('core.Evento',related_name='meus_cupons',default='')
@@ -47,6 +47,7 @@ class CupomAutomatico(Cupom):
 				atividade.valor = atividade.valor * (1 - self.desconto/100)
 				atividade.save()
 			return [atividade.valor for atividade in Atividade.objects.filter(evento=self.evento)]				
+
 
 class Pagamento(models.Model):	
 	valor_total = models.FloatField(null=True)
@@ -68,5 +69,6 @@ class Pagamento(models.Model):
 	def save(self, *args, **kwargs):		
 		self.calcular_valor_total()
 		super(Pagamento, self).save(*args, **kwargs)
+
 
 from core.models import Evento,EventoInscrevivel,Atividade

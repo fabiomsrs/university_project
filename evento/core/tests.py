@@ -7,6 +7,7 @@ from comum.models import EspacoFisico
 # Create your tests here.
 
 class EventoTest(TestCase):
+
 	def test_set_valor_total(self):
 		user = User.objects.create(username="user_teste",password="123")
 		user.save()
@@ -15,8 +16,7 @@ class EventoTest(TestCase):
 		evento.membros.add(user)		
 
 		self.assertEqual(evento.set_valor_total(), "nenhuma atividade cadastrada")			
-		
-	
+			
 	def test_set_evento_principal(self):
 		user = User.objects.create(username="user_teste",password="123")
 		user.save()
@@ -34,8 +34,7 @@ class EventoTest(TestCase):
 
 		with self.assertRaises(Exception):
 			evento.set_evento_principal(evento1)
-		
-	
+			
 	def test_inscricoes_pagas(self):
 		user = User.objects.create(username="user_teste1",password="123")
 		user.save()
@@ -85,7 +84,9 @@ class EventoTest(TestCase):
 		atividades = [atividade0,atividade1]
 		self.assertEqual(evento.inscrever(user,atividades).count(), 2)
 
+
 class AtividadeTest(TestCase):
+
 	def set_atividades_proibidas(self):
 		user = User.objects.create(username="user_teste",password="123")
 		user.save()
@@ -129,7 +130,9 @@ class AtividadeTest(TestCase):
 		atividade0.atividades_proibidas.add(atividade1)
 		self.assertIs(atividade0.isconcomitante(atividade1), True)
 
+
 class TesteTrila(TestCase):
+
 	def test_add_atividade(self):
 		user = User.objects.create(username="user_teste",password="123")
 		user.save()
