@@ -21,9 +21,10 @@ class CupomTest(TestCase):
 		local.save()
 		atividade0 = Atividade(nome="teste", evento=evento, valor=10,descricao=" ",tipo_atividade="simposio",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade0.save()		
-		cupom = CupomAutomatico(nome_cupom='cupom',desconto=10,evento=evento)		
+		cupom = CupomAutomatico(nome_cupom='cupom',desconto=10,evento=evento)						
 		cupom.descontar_valor_evento()
-		#self.assertEqual(cupom.valor, 9)
+		atividade0 = Atividade.objects.get(pk=atividade0.pk)
+		self.assertEqual(atividade0.valor, 9)
 		
 		evento1 = EventoInscrevivel(nome_evento="teste_teste",tipo_evento="congresso")		
 		evento1.valor = 100
@@ -31,9 +32,10 @@ class CupomTest(TestCase):
 		evento1.membros.add(user)
 		atividade1 = Atividade(nome="teste", evento=evento1, valor=20,descricao=" ",tipo_atividade="simposio",ispadrao=False,responsavel=responsavel,usuario_criador=user,horario_inicio=datetime.datetime(year=2005,month=1,day=1,hour=15),horario_final=datetime.datetime(year=2005,month=1,day=1,hour=16),local=local)
 		atividade1.save()
-		cupom = CupomAutomatico(nome_cupom='cupom',desconto=10,evento=evento1)				
+		cupom = CupomAutomatico(nome_cupom='cupom',desconto=10,evento=evento1)						
 		cupom.descontar_valor_evento()
-		#self.assertEqual(evento1.valor,90)
+		evento1 = EventoInscrevivel.objects.get(pk=evento1.pk)
+		self.assertEqual(evento1.valor,90)
 	
 	def test_periodo_cupom_automatico(self):		
 		pass
