@@ -79,7 +79,7 @@ class Evento(models.Model):
 		for atividade in atividades:
 			inscricao.atividades.add(atividade)
 					
-		return inscricao.atividades.get_queryset()
+		return inscricao
 
 	def set_evento_principal(self, evento):
 		if self.evento_principal == None and evento.evento_principal == None:
@@ -112,11 +112,10 @@ class EventoInscrevivel(Evento):
 
 	def inscrever(self, user):
 		inscricao = Inscricao.objects.create(usuario=user,evento=self)
-
 		for atividade in Atividade.objects.filter(evento=self):
 			inscricao.atividades.add(atividade)
 
-		return inscricao.atividades.get_queryset()
+		return inscricao
 		
 	def set_valor_total(self):
 		self.valor = 0
