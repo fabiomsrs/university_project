@@ -38,6 +38,7 @@ class Inscrevivel(models.Model):
 	class Meta:
 		abstract = True
 
+
 class Atividade(Inscrevivel):	
 	descricao = models.TextField(max_length=250)	
 	evento = models.ForeignKey('Evento',related_name='minhas_atividades',default='')
@@ -118,8 +119,7 @@ class EventoInscrevivel(Evento):
 		if self.evento_ptr.minhas_atividades.count() != 0:
 			for atividade in self.evento_ptr.minhas_atividades.all():
 				self.valor += atividade.valor
-		return "nenhuma atividade cadastrada"				
-		
+		return "nenhuma atividade cadastrada"						
 
 
 class Agenda(models.Model):
@@ -141,9 +141,7 @@ class Responsavel(models.Model):
 
 class Pacote(Inscrevivel):
 	atividades = models.ManyToManyField('Atividade')
-	#atividades = models.ManyToManyField('Atividade')
-	#nome_pacote = models.CharField(max_length=25)	
-	#valor_total = models.FloatField(null=True)
+
 	def add_atividade(self,atividade):		
 		if self.atividades.count() > 0:
 			for a in self.atividades.all():
@@ -154,7 +152,6 @@ class Pacote(Inscrevivel):
 
 
 class Trilha(Pacote):
-	#nome = models.CharField(max_length=25)
 	tema = models.CharField(max_length=25)	
 	coordenadores = models.ManyToManyField('auth.User',related_name='minhas_trilhas')
 

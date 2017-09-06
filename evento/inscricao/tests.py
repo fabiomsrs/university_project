@@ -9,7 +9,6 @@ from comum.models import EspacoFisico
 class CupomTest(TestCase):
 
 	def test_desconto_cupom_automatico(self):
-
 		user = User.objects.create(username="user_teste",password="123")
 		user.save()
 		evento = Evento(nome_evento="teste_teste")		
@@ -41,26 +40,23 @@ class CupomTest(TestCase):
 		pass
 		#self.assertIs(cupom.get_periodo() > 0, True) #TODO
 
-def test_payment(self):
-		user = User.objects.create(username="user_teste2",password="123")
-		user.save()
-		evento = Evento(nome_evento="teste_teste2")
-		evento.save()
-		evento.membros.add(user)
-		responsavel =  Responsavel(nome_responsavel='responsavel teste',descricao_responsavel='descricao')
-		responsavel.save()
-		atividade0 = Atividade(nome="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user)
-		atividade0.save()
-		atividade1 = Atividade(nome="teste1", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user)
-		atividade1.save()
-		inscricao = Inscricao(usuario=user,evento=evento)
-		inscricao.save()
-		item = ItemInscricao(atividade = atividade0, inscricao=inscricao)
-		item.save()
-		item1 = ItemInscricao(atividade = atividade1, inscricao=inscricao)
-		item1.save()
-		inscricao.meus_itens.add(item,item1)
-		Pagamento(inscricao=inscricao).save()
+	def test_payment(self):
+			user = User.objects.create(username="user_teste2",password="123")
+			user.save()
+			evento = Evento(nome_evento="teste_teste2")
+			evento.save()
+			evento.membros.add(user)
+			responsavel =  Responsavel(nome_responsavel='responsavel teste',descricao_responsavel='descricao')
+			responsavel.save()
+			atividade0 = Atividade(nome="teste", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user)
+			atividade0.save()
+			atividade1 = Atividade(nome="teste1", evento=evento, valor=10,descricao=" ",ispadrao=False,responsavel=responsavel,usuario_criador=user)
+			atividade1.save()
+			inscricao = Inscricao(usuario=user,evento=evento)
+			inscricao.save()
+			inscricao.atividades.add(atividade0)
+			inscricao.atividades.add(atividade1)
+			Pagamento(inscricao=inscricao).save()
 
-		self.assertIs(inscricao.meu_pagamento.calcular_valor_total() > 0, True)
-		self.assertEqual(inscricao.meu_pagamento.calcular_valor_total(), 20)		
+			self.assertIs(inscricao.meu_pagamento.calcular_valor_total() > 0, True)
+			self.assertEqual(inscricao.meu_pagamento.calcular_valor_total(), 20)		
