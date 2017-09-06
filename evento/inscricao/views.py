@@ -2,24 +2,25 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
 from appweb.forms.inscricaoForm import InscricaoForm
 from appweb.forms.cadastroCupomForm import CupomForm
-from core.models import Evento,Atividade
+from core.models import EventoInscrevivel,Evento,Atividade
 from inscricao.models import Cupom,Pagamento,Inscricao
 
 # Create your views here.
 class Inscrever(View):
-	form = InscricaoForm
+	form = InscricaoForm	
+	def set_inscrever(self,evento,request):
+		inscricao = evento.inscrever(request.user)				
+		Pagamento(inscricao=inscricao).save()
+		return redirect('evento:lista_outros_eventos')			
 
 	def post(self, request, *args, **kwargs):		
 		form = self.form(data=request.POST, atividades=Atividade.objects.all())											
-		evento = evento = get_object_or_404(Evento, pk=self.kwargs["pk"])														
+		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])														
 		if form.is_valid():
-			inscricao = Inscricao(usuario=request.user,evento=evento)	
-			inscricao.save()	
-			for atividade in request.POST.getlist('atividades'):
-				atividade = Atividade.objects.get(pk=int(atividade))				
-				inscricao.atividades.add(atividade)
-			Pagamento(inscricao=inscricao).save()
-			return redirect('evento:lista_outros_eventos')
+			if evento.pk in [evento_inscrevivel.pk for evento_inscrevivel in EventoInscrevivel.objects.all()]:
+				evento = EventoInscrevivel.objects.get(pk=evento.pk)				
+				return self.set_inscrever(evento,self.request)
+			return self.set_inscrever(evento,self.request)
 							
 	def get(self, request, *args, **kwargs):
 		evento = get_object_or_404(Evento, pk=self.kwargs["pk"])		
