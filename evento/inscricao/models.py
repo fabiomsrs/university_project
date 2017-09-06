@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 # Create your models here.
 
@@ -11,13 +12,19 @@ class Inscricao(models.Model):
 	def __str__(self):
 		return self.usuario.first_name
 
-	def save(self, *args, **kwargs):
-		#evitar inscricoes repetidas
+	def validate_inscricao_repetida(self):
 		for inscricao in Inscricao.objects.all():
 			if self.evento == inscricao.evento and self.usuario == inscricao.usuario:
-				raise Exception('Inscricao ja existe')			
-		super(Inscricao, self).save(*args, **kwargs)
+				raise ValidationError('Inscricao ja existe')	
+		
+	def clean(self):
+		#evitar inscricoes repetidas
+		super(Inscricao, self).clean()
+		self.validate_inscricao_repetida()
 
+	def save(self, *args, **kwargs):
+		self.clean()
+		super(Inscricao, self).save()
 
 class Cupom(models.Model):
 	nome_cupom = models.CharField(max_length=25)
