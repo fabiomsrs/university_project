@@ -10,11 +10,12 @@ Projeto com o objetivo de criar uma plataforma online de eventos, onde pessoas p
 	- **.config:** Contém arquivos de configuração do banco de dados e urls.
 - **requeriments.txt:** Script usado para baixar as dependencias necessárias para a execução da aplicação.
 # Modelagem
+
 - Diagrama de Classes
 ![Modelagem Design de Classes](/documentação/diagrama%20de%20classe/diagrama%20de%20classe.jpg)
 
 - Diagrama de Caso de Uso
-![Modelagem Caso de Uso](/documentação/diagrama%20de%20caso%20de%20uso/diagrama%20caso%20de%20uso.jpg)
+![](/documentação/diagrama%20de%20caso%20de%20uso/caso%20de%20uso.png)
 
 - Diagrama de Objeto
 ![Modelagem Diagrama de objetos](documentação/diagrama%20de%20objetos/diagrama%20de%20objeto.jpg)
