@@ -16,6 +16,7 @@ Projeto com o objetivo de criar uma plataforma online de eventos, onde pessoas p
 - Diagrama de Caso de Uso
 ![Modelagem Caso de Uso](/documentação/diagrama%20de%20caso%20de%20uso/diagrama%20caso%20de%20uso.jpg)
 
+- Diagrama de Objeto
 ![Modelagem Diagrama de objetos](documentação/diagrama%20de%20objetos/diagrama%20de%20objeto.jpg)
 
 ## Execução da aplicação:
