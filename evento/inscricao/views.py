@@ -9,9 +9,13 @@ from inscricao.models import Cupom,Pagamento,Inscricao
 class Inscrever(View):
 	form = InscricaoForm	
 	def set_inscrever(self,evento,request):
-		inscricao = evento.inscrever(request.user)				
+		if evento.pk in [evento_inscrevivel.pk for evento_inscrevivel in EventoInscrevivel.objects.all()]:
+			inscricao = evento.inscrever(request.user)				
+			Pagamento(inscricao=inscricao).save()
+			return redirect('evento:lista_outros_eventos')
+		inscricao = evento.inscrever(request.user,request.POST.getlist('atividades'))				
 		Pagamento(inscricao=inscricao).save()
-		return redirect('evento:lista_outros_eventos')			
+						
 
 	def post(self, request, *args, **kwargs):		
 		form = self.form(data=request.POST, atividades=Atividade.objects.all())											
